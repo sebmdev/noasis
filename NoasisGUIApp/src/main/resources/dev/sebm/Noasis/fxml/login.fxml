@@ -46,18 +46,18 @@
                      </font>
                   </Label>
                   <Label text="Email" />
-                  <TextField>
+                  <TextField fx:id="tfEmail">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
                   </TextField>
                   <Label text="Password" />
-                  <PasswordField>
+                  <PasswordField fx:id="tfPassword">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Log In">
+                  <Button fx:id="btnSubmit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Log In">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
@@ -87,7 +87,7 @@
       </VBox>
       <AnchorPane fx:id="imageAnchorPane" prefHeight="681.0" prefWidth="648.0" GridPane.columnIndex="1" GridPane.rowSpan="2147483647">
          <children>
-            <ImageView fx:id="asideImage" fitHeight="604.0" fitWidth="540.0" pickOnBounds="true" AnchorPane.rightAnchor="0.0">
+            <ImageView fx:id="asideImage" fitHeight="600.0" fitWidth="540.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <image>
                   <Image url="@../assets/images/login-art.png" />
                </image>

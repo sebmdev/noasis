@@ -26,6 +26,8 @@ public class StageInitializer implements ApplicationListener<NoasisApplication.S
         stage.setTitle("Noasis");
         stage.setHeight(400);
         stage.setWidth(600);
+        stage.setMinWidth(600);
+        stage.setMinHeight(400);
         stage.setScene(scene);
         stage.show();
     }
