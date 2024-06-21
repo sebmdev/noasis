@@ -1,0 +1,48 @@
+{
+  "name": "noasisserverapp",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development TZ=Asia/Singapore nodemon src/app.ts",
+    "build": "npx tsc",
+    "deploy": "cross-env NODE_ENV=production TZ=Asia/Singapore node dist/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "crypto-js": "^4.2.0",
+    "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
+    "email-validator": "^2.0.4",
+    "express": "^4.19.2",
+    "express-mysql-session": "^2.1.8",
+    "express-session": "^1.18.0",
+    "js-cookie": "^3.0.5",
+    "mysql2": "^3.10.1",
+    "nodemailer": "^6.9.13",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/crypto-js": "^4.2.2",
+    "@types/express": "^4.17.21",
+    "@types/express-mysql-session": "^3.0.6",
+    "@types/express-session": "^1.18.0",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20.14.2",
+    "@types/nodemailer": "^6.4.15",
+    "@types/qrcode": "^1.5.5",
+    "eslint": "^9.5.0",
+    "globals": "^15.5.0",
+    "nodemon": "^3.1.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
