@@ -26,40 +26,46 @@ const options = {
   database: process.env.MYSQL_SCHEMA,
 }
 
-// export const pool = mysql.createPool({
-//   ...options,
-//   connectionLimit: 10,
-// })
+export const pool = mysql.createPool({
+  ...options,
+  connectionLimit: 10,
+})
 
-// const sessionStore = new MySQLStore(options, pool)
+const sessionStore = new MySQLStore(options, pool)
 
 // ROUTES SETUP
 app.use(express.json())
 app.use(cookieParser())
-// app.use(`
-//   session({
-//     secret: process.env.SESSION_SECRET as string,
-//     resave: false,
-//     saveUninitialized: false,
-//     // store: sessionStore,
-//     cookie: {
-//       secure: false,
-//       maxAge: 1000 * 60 * 60 * 24 * 365 * 5
-//     }
-//   })
-// )`
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET as string,
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+    cookie: {
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24 * 365 * 5
+    }
+  })
+)
 
 app.get('/', async (req: Request, res: Response) => {
-  // if (!req.session.user) {
-  //   req.session.user = {
-  //     'email': 'sebm@gmail.com'
-  //   }
-  //   console.log('Created session: ', req.sessionID)
-  // } else {
-  //   console.log('Loaded session: ', req.sessionID)
-  // }
+  if (!req.session.user) {
+    req.session.user = {
+      'email': 'sebm@gmail.com'
+    }
+    console.log('Created session: ', req.sessionID)
+  } else {
+    console.log('Loaded session: ', req.sessionID)
+  }
   setTimeout(() => {res.json({message: "Hello world!"})}, 2000)
   
+})
+
+app.get('/test', async (req: Request, res: Response) => {
+  console.log(req.session.id)
+  console.log(req.session.user)
+  res.json({"user": req.session.user, "id": req.session.id})
 })
 
 app.listen(process.env.PORT, () =>

@@ -8,6 +8,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.Arrays;
+
 public class NoasisApplication extends Application {
 
     private ConfigurableApplicationContext applicationContext;
@@ -15,6 +17,7 @@ public class NoasisApplication extends Application {
     @Override
     public void init() {
         applicationContext = new SpringApplicationBuilder(MainApplication.class).run();
+        Arrays.asList(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
     }
 
     @Override

@@ -1,28 +1,33 @@
 package dev.sebm.noasis;
 
-import atlantafx.base.theme.PrimerLight;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import dev.sebm.noasis.NoasisApplication.StageReadyEvent;
+import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationListener;
-import dev.sebm.noasis.NoasisApplication.StageReadyEvent;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
 public class StageInitializer implements ApplicationListener<NoasisApplication.StageReadyEvent> {
-    private static Scene scene;
+    private final SpringFXMLLoader loader;
+
+    public StageInitializer(SpringFXMLLoader loader) {
+        this.loader = loader;
+    }
 
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         Stage stage = event.getStage();
+        Scene scene;
+
         try {
-            scene = new Scene(loadFXML("fxml/login"), 640, 480);
+            scene = new Scene(loader.loadFXML("fxml/login"), 640, 480);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         stage.setTitle("Noasis");
         stage.setHeight(400);
         stage.setWidth(600);
@@ -30,14 +35,5 @@ public class StageInitializer implements ApplicationListener<NoasisApplication.S
         stage.setMinHeight(400);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StageInitializer.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
     }
 }
