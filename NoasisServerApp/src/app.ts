@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import express, { NextFunction, Request, Response } from 'express'
 import session from 'express-session'
 import mysql from 'mysql2/promise'
+import Signup from './routes/Signup'
+import Login from './routes/Login'
 const MySQLStore = require('express-mysql-session')(session)
 
 declare module 'express-session' {
@@ -59,8 +61,11 @@ app.get('/', async (req: Request, res: Response) => {
     console.log('Loaded session: ', req.sessionID)
   }
   setTimeout(() => {res.json({message: "Hello world!"})}, 2000)
-  
 })
+
+app.post('/signup', async (req: Request, res: Response) => Signup(req, res))
+
+app.post('/login', async (req: Request, res: Response) => Login(req, res))
 
 app.get('/test', async (req: Request, res: Response) => {
   console.log(req.session.id)

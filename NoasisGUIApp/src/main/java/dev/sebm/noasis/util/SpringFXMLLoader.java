@@ -1,6 +1,6 @@
 package dev.sebm.noasis.util;
 
-import dev.sebm.noasis.StageInitializer;
+import dev.sebm.noasis.NoasisApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import org.springframework.context.ApplicationContext;
@@ -17,7 +17,7 @@ public class SpringFXMLLoader {
     }
 
     public Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StageInitializer.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(NoasisApplication.class.getResource(fxml + ".fxml"));
         fxmlLoader.setControllerFactory(applicationContext::getBean);
         return fxmlLoader.load();
     }

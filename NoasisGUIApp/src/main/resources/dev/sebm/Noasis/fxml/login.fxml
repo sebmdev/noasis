@@ -87,11 +87,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="btnSubmit1" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="test">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
                </children>
                <opaqueInsets>
                   <Insets />
