@@ -77,7 +77,7 @@
                   </Label>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" style="-fx-text-fill: -color-accent-3;" text="Sign up">
+                        <Label fx:id="signUpLbl" alignment="CENTER" contentDisplay="CENTER" style="-fx-text-fill: -color-accent-3;" text="Sign up">
                            <font>
                               <Font size="10.0" />
                            </font>
