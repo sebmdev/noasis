@@ -1,13 +1,17 @@
 package dev.sebm.noasis;
 
 import atlantafx.base.theme.PrimerLight;
+import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class NoasisApplication extends Application {
@@ -29,17 +33,20 @@ public class NoasisApplication extends Application {
     @Override
     public void start(Stage stage) {
         NoasisApplication.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        applicationContext.publishEvent(new StageReadyEvent(stage));
-    }
-
-
-    public static class StageReadyEvent extends ApplicationEvent {
-        public StageReadyEvent(Stage stage) {
-            super(stage);
+        Scene scene;
+        SpringFXMLLoader springFXMLLoader = applicationContext.getBean(SpringFXMLLoader.class);
+        try {
+            scene = new Scene(springFXMLLoader.loadFXML("fxml/login"), 640, 480);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        public Stage getStage() {
-            return ((Stage) getSource());
-        }
+        stage.setTitle("Noasis");
+        stage.setHeight(400);
+        stage.setWidth(600);
+        stage.setMinWidth(600);
+        stage.setMinHeight(400);
+        stage.setScene(scene);
+        stage.show();
     }
 }

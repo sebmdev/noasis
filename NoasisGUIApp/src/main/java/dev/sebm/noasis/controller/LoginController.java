@@ -1,20 +1,22 @@
 package dev.sebm.noasis.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sebm.noasis.jsonresponses.ErrorResponse;
+import dev.sebm.noasis.jsonresponses.LoginSuccessResponse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.cookie.Cookie;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
@@ -54,65 +56,42 @@ public class LoginController {
             System.out.println(password);
 
             try {
-                final HttpGet request = new HttpGet("http://localhost:3000");
-                try (CloseableHttpClient client = HttpClientBuilder.
-                        create()
-                        .setDefaultRequestConfig(
-                                RequestConfig
-                                        .custom()
-                                        .setCookieSpec(CookieSpecs.STANDARD)
-                                        .build()
-                        )
-                        .setDefaultCookieStore(httpCookieStore)
-                        .build();
-                     CloseableHttpResponse response = client.execute(request)
-                ) {
-                    System.out.println(EntityUtils.toString(response.getEntity()));
-                    Header[] headers = response.getHeaders("Set-Cookie");
-                    for (Header h : headers) {
-                        System.out.println(h.getValue().toString());
-                    }
-                    for (Cookie cookie : httpCookieStore.getCookies()) {
-                        System.out.println("WOW");
-                        System.out.println(cookie.getName() + ": " + cookie.getValue());
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                final HttpPost httpPost = new HttpPost("http://localhost:3000/login");
 
-        btnSubmit1.setOnMouseClicked(_ -> {
-            String email = tfEmail.getText();
-            String password = tfPassword.getText();
+                httpPost.setHeader("Accept", "application/json");
+                httpPost.setHeader("Content-type", "application/json");
+                String json = "{\r\n" +
+                        String.format("  \"email\": \"%s\",\r\n", email) +
+                        String.format("  \"password\": \"%s\"\r\n", password) +
+                        "}";
+                System.out.println(json);
+                StringEntity stringEntity = new StringEntity(json);
+                httpPost.setEntity(stringEntity);
 
-            System.out.println(email);
-            System.out.println(password);
+                CloseableHttpClient httpClient = HttpClients.createDefault();
 
-            try {
-                final HttpGet request = new HttpGet("http://localhost:3000");
-                try (CloseableHttpClient client = HttpClientBuilder.
-                        create()
-                        .setDefaultRequestConfig(
-                                RequestConfig
-                                        .custom()
-                                        .setCookieSpec(CookieSpecs.STANDARD)
-                                        .build()
-                        )
-                        .setDefaultCookieStore(httpCookieStore)
-                        .build();
-                     CloseableHttpResponse response = client.execute(request)
-                ) {
-                    System.out.println(EntityUtils.toString(response.getEntity()));
-                    Header[] headers = response.getHeaders("Set-Cookie");
-                    for (Header h : headers) {
-                        System.out.println(h.getValue().toString());
+                ResponseHandler<String> responseHandler = response -> {
+                    int status = response.getStatusLine().getStatusCode();
+                    System.out.println(response.getEntity().toString());
+                    HttpEntity entity = response.getEntity();
+                    ObjectMapper objectMapper = new ObjectMapper();
+
+                    if (status >= 400) {
+                        ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
+                        System.out.println(errorResponse.getError());
+                        return null;
                     }
-                    for (Cookie cookie : httpCookieStore.getCookies()) {
-                        System.out.println("WOW");
-                        System.out.println(cookie.getName() + ": " + cookie.getValue());
+                    if (entity != null) {
+                        LoginSuccessResponse loginSuccessResponse = objectMapper
+                                .readValue(entity.getContent(), LoginSuccessResponse.class);
+
+                        System.out.println(loginSuccessResponse);
+                        System.out.println(loginSuccessResponse.getUser().getId());
                     }
-                }
+                    return null;
+                };
+                httpClient.execute(httpPost, responseHandler);
+                httpClient.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
