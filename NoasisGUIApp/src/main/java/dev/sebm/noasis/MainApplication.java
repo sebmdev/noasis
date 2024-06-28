@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Lazy;
 
 @SpringBootApplication
 @Lazy
-public class MainApplication extends Application {
+public class MainApplication{
 
     public static void main(String[] args) {
 //        SpringApplication.run(NoasisApplication.class, args);
@@ -19,8 +19,6 @@ public class MainApplication extends Application {
     }
 
     double x, y = 0;
-
-    @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("src/main/resources/dev/sebm/Noasis/fxml/dashTEST.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);

@@ -43,6 +43,7 @@ public class RegisterController {
         signUp.setOnMouseClicked(_ -> {
             Parent pane;
             Stage stage = (Stage)(signUp.getScene().getWindow());
+
             try {
                 pane = springFXMLLoader.loadFXML("fxml/dashboard");
                 PauseTransition pause = getPauseTransition(stage);
