@@ -3,11 +3,18 @@ package dev.sebm.noasis.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.LoginSuccessResponse;
+import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
@@ -18,8 +25,10 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.prefs.Preferences;
 
 @Component
@@ -29,14 +38,18 @@ public class LoginController {
     @FXML private TextField tfEmail;
     @FXML private TextField tfPassword;
     @FXML private Button btnSubmit;
+    @FXML private Label signUpLbl;
     @FXML private Button btnSubmit1;
     CookieStore httpCookieStore = new BasicCookieStore();
 
     private Preferences preferences;
+    private SpringFXMLLoader springFXMLLoader;
+    private ApplicationContext applicationContext;
 
-    public LoginController(Preferences preferences) {
+    public LoginController(Preferences preferences, SpringFXMLLoader springFXMLLoader, ApplicationContext applicationContext) {
         this.preferences = preferences.node("auth");
-//        this.preferences = preferences;
+        this.springFXMLLoader = springFXMLLoader;
+        this.applicationContext = applicationContext;
     }
 
     public void initialize() {
@@ -96,6 +109,21 @@ public class LoginController {
                 e.printStackTrace();
             }
         });
+
+        signUpLbl.setOnMouseClicked(_ -> {
+            Scene scene;
+            try {
+                scene = new Scene(springFXMLLoader.loadFXML("fxml/register"), 640, 480);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Stage stage = (Stage)(signUpLbl.getScene().getWindow());
+            stage.setScene(scene);
+        });
         // Any other initialization code
+
+    }
+
+    private void changeScene(String s, Label signUpLbl) {
     }
 }
