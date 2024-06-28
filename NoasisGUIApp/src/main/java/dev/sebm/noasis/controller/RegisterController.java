@@ -45,7 +45,7 @@ public class RegisterController {
             Stage stage = (Stage)(signUp.getScene().getWindow());
 
             try {
-                pane = springFXMLLoader.loadFXML("fxml/dashboard");
+                pane = springFXMLLoader.loadFXML("fxml/dashTEST");
                 PauseTransition pause = getPauseTransition(stage);
                 pause.play();
             } catch (IOException e) {
