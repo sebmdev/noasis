@@ -46,30 +46,11 @@ public class RegisterController {
 
             try {
                 pane = springFXMLLoader.loadFXML("fxml/dashTEST");
-                PauseTransition pause = getPauseTransition(stage);
-                pause.play();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             stage.getScene().setRoot(pane);
         });
-
-
-
-    }
-
-    private PauseTransition getPauseTransition(Stage stage) {
-        PauseTransition pause = new PauseTransition(Duration.seconds(2)); // 2 seconds delay
-        pause.setOnFinished(e -> {
-            try {
-                // Load the original FXML screen
-                Parent originalPane = springFXMLLoader.loadFXML("fxml/login");
-                stage.getScene().setRoot(originalPane);
-            } catch (IOException ex) {
-                throw new RuntimeException(String.valueOf(e));
-            }
-        });
-        return pause;
     }
 }
