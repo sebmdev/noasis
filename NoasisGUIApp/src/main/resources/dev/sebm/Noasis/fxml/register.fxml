@@ -28,7 +28,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="2147483647">
          <children>
-            <VBox maxWidth="400.0">
+            <VBox fx:id="errorLbl" maxWidth="400.0">
                <children>
                   <Label text="noasis">
                      <font>
@@ -59,17 +59,21 @@
                      </VBox.margin>
                   </PasswordField>
                   <Label text="Confirm Password" />
-                  <PasswordField />
-                  <Label>
-                     <font>
-                        <Font size="6.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="Login" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Log In">
+                  <PasswordField>
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <Button fx:id="signUp" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Sign Up">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                   </Button>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="ErrorLabel" textFill="RED" visible="false">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
                   <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Already have an account?">
                      <font>
                         <Font size="10.0" />
