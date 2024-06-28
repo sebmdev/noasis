@@ -42,8 +42,8 @@ public class NoasisApplication extends Application {
         }
 
         stage.setTitle("Noasis");
-        stage.setHeight(400);
-        stage.setWidth(600);
+        stage.setHeight(600);
+        stage.setWidth(800);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
         stage.setScene(scene);

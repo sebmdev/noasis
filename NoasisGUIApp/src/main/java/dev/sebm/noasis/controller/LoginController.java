@@ -111,14 +111,15 @@ public class LoginController {
         });
 
         signUpLbl.setOnMouseClicked(_ -> {
-            Scene scene;
+            Parent pane;
+            Stage stage = (Stage)(signUpLbl.getScene().getWindow());
             try {
-                scene = new Scene(springFXMLLoader.loadFXML("fxml/register"), 640, 480);
+                pane = springFXMLLoader.loadFXML("fxml/register");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Stage stage = (Stage)(signUpLbl.getScene().getWindow());
-            stage.setScene(scene);
+
+                stage.getScene().setRoot(pane);
         });
         // Any other initialization code
 
