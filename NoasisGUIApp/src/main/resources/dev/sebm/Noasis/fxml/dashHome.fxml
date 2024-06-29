@@ -11,9 +11,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.dashTestController">
    <children>
-      <AnchorPane prefHeight="50.0" prefWidth="1080.0" style="-fx-background-color: red;">
+      <AnchorPane prefHeight="50.0" prefWidth="1080.0" style="-fx-background-color: red;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="959.0" layoutY="7.0" text="noasis">
+            <Label layoutX="959.0" layoutY="7.0" text="noasis" AnchorPane.rightAnchor="20.0">
                <font>
                   <Font name="Lucida Bright" size="28.0" />
                </font>
@@ -25,47 +25,9 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="56.0" prefHeight="544.0" prefWidth="61.0" style="-fx-background-color: blue;">
+      <AnchorPane layoutY="51.0" prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="551.0" prefWidth="61.0" spacing="75.0">
-               <children>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/images/menu.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/images/menu.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/images/menu.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/images/menu.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="135.0" />
-                     </VBox.margin>
-                  </ImageView>
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane1" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: black;" />
-      <AnchorPane prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-         <children>
-            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="6.0" prefHeight="544.0" prefWidth="62.0" spacing="75.0">
+            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-7.0" prefHeight="550.0" prefWidth="62.0" spacing="75.0">
                <children>
                   <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -100,7 +62,45 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pane2" style="-fx-background-color: yellow;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="61.0">
+      <AnchorPane fx:id="pane1" layoutX="1.0" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-7.0" prefHeight="550.0" prefWidth="62.0" spacing="75.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/home.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/share.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/ai.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/logout.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="135.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pane2" style="-fx-background-color: yellow;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="61.0" AnchorPane.topAnchor="50.0">
          <children>
             <VBox spacing="75.0">
                <children>
