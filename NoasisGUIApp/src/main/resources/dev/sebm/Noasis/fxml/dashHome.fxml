@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.dashTestController">
+   <children>
+      <AnchorPane prefHeight="50.0" prefWidth="1080.0" style="-fx-background-color: red;">
+         <children>
+            <Label layoutX="959.0" layoutY="7.0" text="noasis">
+               <font>
+                  <Font name="Lucida Bright" size="28.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="menu" fitHeight="45.0" fitWidth="47.0" layoutX="8.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/images/menu.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="56.0" prefHeight="544.0" prefWidth="61.0" style="-fx-background-color: blue;">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="551.0" prefWidth="61.0" spacing="75.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/menu.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/menu.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/menu.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/menu.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="135.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pane1" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: black;" />
+      <AnchorPane prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="6.0" prefHeight="544.0" prefWidth="62.0" spacing="75.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/home.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/share.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/ai.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/images/logout.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets top="135.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pane2" style="-fx-background-color: yellow;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="61.0">
+         <children>
+            <VBox spacing="75.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Study Sets">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Shared Sets">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Generate with AI">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Logout">
+                     <VBox.margin>
+                        <Insets top="135.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
