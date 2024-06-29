@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -27,9 +28,9 @@
       </AnchorPane>
       <AnchorPane layoutY="51.0" prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-7.0" prefHeight="550.0" prefWidth="62.0" spacing="75.0">
+            <VBox fx:id="menubox" alignment="TOP_CENTER" layoutX="-1.0" layoutY="-7.0" prefHeight="550.0" prefWidth="62.0" spacing="75.0">
                <children>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="home" fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/images/home.png" />
                      </image>
@@ -37,24 +38,30 @@
                         <Insets />
                      </VBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="share" fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/images/share.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ai" fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/images/ai.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/images/logout.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="135.0" />
-                     </VBox.margin>
-                  </ImageView>
+
+                  <!-- Pane for logout ImageView -->
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="logout" fitHeight="45.0" fitWidth="47.0" layoutX="8.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/images/logout.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+
+
+
                </children>
                <padding>
                   <Insets top="10.0" />
@@ -62,12 +69,12 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="pane1" layoutX="1.0" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="pane1" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <VBox alignment="TOP_CENTER" layoutX="-1.0" layoutY="-7.0" prefHeight="550.0" prefWidth="62.0" spacing="75.0">
+            <VBox fx:id="menubox1" alignment="TOP_CENTER" layoutX="-1.0" layoutY="-7.0" prefHeight="550.0" prefWidth="62.0" spacing="75.0">
                <children>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="home1" fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/images/home.png" />
                      </image>
@@ -75,24 +82,25 @@
                         <Insets />
                      </VBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="share1" fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/images/share.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ai1" fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../assets/images/ai.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="45.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../assets/images/logout.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="135.0" />
-                     </VBox.margin>
-                  </ImageView>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="logout1" fitHeight="45.0" fitWidth="47.0" layoutX="8.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../assets/images/logout.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
                </children>
                <padding>
                   <Insets top="10.0" />

@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +16,31 @@ import java.util.ResourceBundle;
 @Component
 public class dashTestController implements Initializable {
     @FXML
-    private ImageView menu;
+    private ImageView menu, home, share, ai, logout;
 
-    @FXML private AnchorPane pane1, pane2;
+    @FXML
+    private AnchorPane pane1, pane2;
+
+    @FXML
+    private VBox menubox;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        makeImageViewResponsive(home, menubox);
+        makeImageViewResponsive(share, menubox);
+        makeImageViewResponsive(ai, menubox);
+        makeImageViewResponsive(logout, menubox);
+
+
         pane1.setVisible(false);
 
-        FadeTransition fadeTransition=new FadeTransition(Duration.seconds(0.5),pane1);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), pane1);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
         fadeTransition.play();
 
-        TranslateTransition translateTransition=new TranslateTransition(Duration.seconds(0.5),pane2);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), pane2);
         translateTransition.setByX(-600);
         translateTransition.play();
 
@@ -61,9 +73,13 @@ public class dashTestController implements Initializable {
 
         });
 
-        }
-
     }
 
+    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
+        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.1)); // Adjust the multiplier as needed
+        imageView.fitWidthProperty().bind(vbox.widthProperty().multiply(0.8));   // Adjust the multiplier as needed
+
+    }
+}
 
 
