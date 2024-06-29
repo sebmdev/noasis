@@ -18,10 +18,7 @@ public class dashTestController implements Initializable {
     @FXML
     private ImageView menu;
 
-    @FXML private AnchorPane pane1;
-
-    @FXML private Pane pane2;
-
+    @FXML private AnchorPane pane1, pane2;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         pane1.setVisible(false);

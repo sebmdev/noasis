@@ -45,7 +45,7 @@ public class RegisterController {
             Stage stage = (Stage)(signUp.getScene().getWindow());
 
             try {
-                pane = springFXMLLoader.loadFXML("fxml/dashTEST");
+                pane = springFXMLLoader.loadFXML("fxml/dashHome");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
