@@ -23,6 +23,7 @@ public class RegisterController {
     @FXML private ImageView asideImage;
     @FXML private AnchorPane imageAnchorPane;
     @FXML private Button signUp;
+    @FXML private Label loginLbl;
 
     private final SpringFXMLLoader springFXMLLoader;
 
@@ -46,6 +47,18 @@ public class RegisterController {
 
             try {
                 pane = springFXMLLoader.loadFXML("fxml/dashHome");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            stage.getScene().setRoot(pane);
+        });
+
+        loginLbl.setOnMouseClicked(_ -> {
+            Parent pane;
+            Stage stage = (Stage)(loginLbl.getScene().getWindow());
+            try {
+                pane = springFXMLLoader.loadFXML("fxml/login");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

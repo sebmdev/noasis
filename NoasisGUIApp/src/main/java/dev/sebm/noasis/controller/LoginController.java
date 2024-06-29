@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.LoginSuccessResponse;
 import dev.sebm.noasis.util.SpringFXMLLoader;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,7 +41,9 @@ public class LoginController {
     @FXML private TextField tfPassword;
     @FXML private Button btnSubmit;
     @FXML private Label signUpLbl;
+    @FXML private Label errorEmail;
     @FXML private Button btnSubmit1;
+    private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     CookieStore httpCookieStore = new BasicCookieStore();
 
     private Preferences preferences;
@@ -67,6 +71,13 @@ public class LoginController {
 
             System.out.println(email);
             System.out.println(password);
+
+            if (!email.matches(emailRegex)) {
+                msgError(errorEmail, tfEmail);
+                return;
+            } else {
+                msgOkay(errorEmail, tfEmail);
+            }
 
             try {
                 final HttpPost httpPost = new HttpPost("http://localhost:3000/login");
@@ -121,10 +132,37 @@ public class LoginController {
 
                 stage.getScene().setRoot(pane);
         });
+
+        tfEmail.setOnMouseClicked(_ -> {
+            msgOkay(errorEmail, tfEmail);
+        });
+
+        tfEmail.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // Check if the email matches the regex
+                if (!newValue.matches(emailRegex)) {
+                    msgError(errorEmail, tfEmail);
+                    return;
+                } else {
+                    msgOkay(errorEmail, tfEmail);
+                }
+            }
+        });
         // Any other initialization code
 
     }
 
-    private void changeScene(String s, Label signUpLbl) {
+    private void msgError(Label errorLabel, TextField tf){
+        errorLabel.setVisible(true);
+        errorLabel.setText("Invalid email format");
+        errorLabel.setStyle("-fx-font-size: 10px;");
+        tf.setStyle("-fx-border-color: red;");
+    }
+
+    private void msgOkay(Label errorLabel, TextField tf){
+        errorLabel.setStyle("-fx-font-size: 1px;");
+        errorLabel.setVisible(false);
+        tf.setStyle("-fx-border-color: none;");
     }
 }
