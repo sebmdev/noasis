@@ -444,7 +444,7 @@
                         </TilePane>
                      </content>
                   </ScrollPane>
-                  <Button text="Floating Button" StackPane.alignment="BOTTOM_RIGHT">
+                  <Button text="Create Study Set" StackPane.alignment="BOTTOM_RIGHT">
                      <StackPane.margin>
                         <Insets bottom="50.0" right="50.0" />
                      </StackPane.margin>
