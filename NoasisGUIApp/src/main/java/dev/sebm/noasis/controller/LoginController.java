@@ -41,7 +41,7 @@ public class LoginController {
     @FXML private TextField tfPassword;
     @FXML private Button btnSubmit;
     @FXML private Label signUpLbl;
-    @FXML private Label errorEmail;
+    @FXML private Label errorEmail, errorPswd;
     @FXML private Button btnSubmit1;
     private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     CookieStore httpCookieStore = new BasicCookieStore();
@@ -69,15 +69,31 @@ public class LoginController {
             String email = tfEmail.getText();
             String password = tfPassword.getText();
 
+            if(!email.isEmpty()&&!password.isEmpty()){
+                if (email.matches(emailRegex)) {
+                    msgOkay(errorEmail, tfEmail);
+
+                    if(email.equals("Clyde@gmail.com")) {
+                        msgError(errorEmail, tfEmail, "Email Does Not Exist");
+                        return;
+                    }
+                    return;
+                }
+                else{
+                    msgError(errorEmail, tfEmail,"Invalid email format");
+                }
+            }
+            else{
+                if(email.isEmpty()){
+                    msgError(errorEmail, tfEmail, "Hey you, type something");}
+                if(password.isEmpty()){
+                    msgError(errorPswd, tfPassword, "Hey you, type something");
+                }
+                return;
+            }
+
             System.out.println(email);
             System.out.println(password);
-
-            if (!email.matches(emailRegex)) {
-                msgError(errorEmail, tfEmail);
-                return;
-            } else {
-                msgOkay(errorEmail, tfEmail);
-            }
 
             try {
                 final HttpPost httpPost = new HttpPost("http://localhost:3000/login");
@@ -136,13 +152,16 @@ public class LoginController {
         tfEmail.setOnMouseClicked(_ -> {
             msgOkay(errorEmail, tfEmail);
         });
+        tfPassword.setOnMouseClicked(_ -> {
+            msgOkay(errorPswd, tfPassword);
+        });
 
         tfEmail.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // Check if the email matches the regex
                 if (!newValue.matches(emailRegex)) {
-                    msgError(errorEmail, tfEmail);
+                    msgError(errorEmail, tfEmail, "Invalid email format");
                     return;
                 } else {
                     msgOkay(errorEmail, tfEmail);
@@ -153,9 +172,9 @@ public class LoginController {
 
     }
 
-    private void msgError(Label errorLabel, TextField tf){
+    private void msgError(Label errorLabel, TextField tf, String errorMsg){
         errorLabel.setVisible(true);
-        errorLabel.setText("Invalid email format");
+        errorLabel.setText(errorMsg);
         errorLabel.setStyle("-fx-font-size: 10px;");
         tf.setStyle("-fx-border-color: red;");
     }

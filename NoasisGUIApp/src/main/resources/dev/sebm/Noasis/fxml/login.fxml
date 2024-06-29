@@ -61,9 +61,17 @@
                   <Label text="Password" VBox.vgrow="ALWAYS" />
                   <PasswordField fx:id="tfPassword" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                   </PasswordField>
+                  <Label fx:id="errorPswd" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Error Text" textAlignment="CENTER" textFill="RED" visible="false">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
                   <Button fx:id="btnSubmit" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Log In" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="10.0" />
