@@ -13,6 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.prefs.Preferences;
 
 public class NoasisApplication extends Application {
 
@@ -21,7 +22,6 @@ public class NoasisApplication extends Application {
     @Override
     public void init() {
         applicationContext = new SpringApplicationBuilder(MainApplication.class).run();
-        Arrays.asList(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
     }
 
     @Override
@@ -35,10 +35,25 @@ public class NoasisApplication extends Application {
         NoasisApplication.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         Scene scene;
         SpringFXMLLoader springFXMLLoader = applicationContext.getBean(SpringFXMLLoader.class);
-        try {
-            scene = new Scene(springFXMLLoader.loadFXML("fxml/login"), 640, 480);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Preferences preferences = applicationContext.getBean(Preferences.class).node("session");
+        String sessionCookie = preferences.get("connect.sid", "none");
+
+        if (sessionCookie.equals("none")) {
+            System.out.println("No session cookie found. Loading login scene.");
+            // Load the login scene
+            try {
+                scene = new Scene(springFXMLLoader.loadFXML("fxml/login"), 640, 480);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Session cookie found: " + sessionCookie);
+            // Load the main application scene
+            try {
+                scene = new Scene(springFXMLLoader.loadFXML("fxml/dashboard"), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         stage.setTitle("Noasis");

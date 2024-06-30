@@ -7,30 +7,28 @@ import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.springframework.context.ApplicationContext;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 @Component
@@ -41,23 +39,24 @@ public class LoginController {
     @FXML private TextField tfPassword;
     @FXML private Button btnSubmit;
     @FXML private Label signUpLbl;
+<<<<<<< HEAD
     @FXML private Label errorEmail, errorPswd;
     @FXML private Button btnSubmit1;
     private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+=======
+>>>>>>> 11814b5 (Added login functionality)
     CookieStore httpCookieStore = new BasicCookieStore();
 
-    private Preferences preferences;
-    private SpringFXMLLoader springFXMLLoader;
-    private ApplicationContext applicationContext;
+    private final Preferences preferences;
+    private final SpringFXMLLoader springFXMLLoader;
 
-    public LoginController(Preferences preferences, SpringFXMLLoader springFXMLLoader, ApplicationContext applicationContext) {
-        this.preferences = preferences.node("auth");
+    public LoginController(Preferences preferences, SpringFXMLLoader springFXMLLoader) {
+        this.preferences = preferences.node("session");
         this.springFXMLLoader = springFXMLLoader;
-        this.applicationContext = applicationContext;
     }
 
     public void initialize() {
-        this.preferences.put("session_cookie", "abc123");
+        System.out.println(this.preferences.get("sessionCookie", "none"));
         imageAnchorPane.heightProperty().addListener((_, _, t1) -> {
             asideImage.setFitHeight(t1.doubleValue());
         });
@@ -108,7 +107,14 @@ public class LoginController {
                 StringEntity stringEntity = new StringEntity(json);
                 httpPost.setEntity(stringEntity);
 
-                CloseableHttpClient httpClient = HttpClients.createDefault();
+                CloseableHttpClient httpClient = HttpClientBuilder
+                        .create()
+                        .setDefaultCookieStore(httpCookieStore)
+                        .setDefaultRequestConfig(RequestConfig
+                                .custom()
+                                .setCookieSpec(CookieSpecs.STANDARD)
+                                .build())
+                        .build();
 
                 ResponseHandler<String> responseHandler = response -> {
                     int status = response.getStatusLine().getStatusCode();
@@ -125,8 +131,26 @@ public class LoginController {
                         LoginSuccessResponse loginSuccessResponse = objectMapper
                                 .readValue(entity.getContent(), LoginSuccessResponse.class);
 
+
                         System.out.println(loginSuccessResponse);
                         System.out.println(loginSuccessResponse.getUser().getId());
+                        List<Cookie> cookies = httpCookieStore.getCookies();
+                        for (Cookie cookie : cookies) {
+                            System.out.println(cookie.getName() + ": "+ cookie.getValue());
+                            if ("connect.sid".equals(cookie.getName())) {
+                                preferences.put("connect.sid", cookie.getValue());
+                                break;
+                            }
+                        }
+
+                        Parent pane;
+                        Stage stage = (Stage)(signUpLbl.getScene().getWindow());
+                        try {
+                            pane = springFXMLLoader.loadFXML("fxml/dashTEST");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        stage.getScene().setRoot(pane);
                     }
                     return null;
                 };
@@ -145,8 +169,7 @@ public class LoginController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-                stage.getScene().setRoot(pane);
+            stage.getScene().setRoot(pane);
         });
 
         tfEmail.setOnMouseClicked(_ -> {
@@ -171,6 +194,7 @@ public class LoginController {
         // Any other initialization code
 
     }
+<<<<<<< HEAD
 
     private void msgError(Label errorLabel, TextField tf, String errorMsg){
         errorLabel.setVisible(true);
@@ -184,4 +208,6 @@ public class LoginController {
         errorLabel.setVisible(false);
         tf.setStyle("-fx-border-color: none;");
     }
+=======
+>>>>>>> 11814b5 (Added login functionality)
 }

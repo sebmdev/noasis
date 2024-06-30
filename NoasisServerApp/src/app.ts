@@ -5,6 +5,7 @@ import session from 'express-session'
 import mysql from 'mysql2/promise'
 import Signup from './routes/Signup'
 import Login from './routes/Login'
+import CheckSession from './routes/CheckSession'
 const MySQLStore = require('express-mysql-session')(session)
 
 declare module 'express-session' {
@@ -62,6 +63,8 @@ app.get('/', async (req: Request, res: Response) => {
   }
   setTimeout(() => {res.json({message: "Hello world!"})}, 2000)
 })
+
+app.get('/check-session', (req: Request, res: Response) => CheckSession(req, res))
 
 app.post('/signup', async (req: Request, res: Response) => Signup(req, res))
 
