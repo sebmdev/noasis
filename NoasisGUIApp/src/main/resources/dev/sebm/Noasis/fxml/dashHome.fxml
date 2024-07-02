@@ -30,6 +30,11 @@
                   <Image url="@../assets/images/menu.png" />
                </image>
             </ImageView>
+            <Label layoutX="84.0" layoutY="10.0" text="Study Sets">
+               <font>
+                  <Font name="Georgia" size="25.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutY="51.0" prefHeight="550.0" prefWidth="62.0" style="-fx-background-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
@@ -448,6 +453,9 @@
                      <StackPane.margin>
                         <Insets bottom="50.0" right="50.0" />
                      </StackPane.margin>
+                     <font>
+                        <Font name="Georgia" size="15.0" />
+                     </font>
                   </Button>
                </children>
             </StackPane>
@@ -460,17 +468,17 @@
                <children>
                   <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Study Sets">
                      <font>
-                        <Font size="16.0" />
+                        <Font name="Georgia" size="16.0" />
                      </font>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Shared Sets">
                      <font>
-                        <Font size="16.0" />
+                        <Font name="Georgia" size="16.0" />
                      </font>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Generate with AI">
                      <font>
-                        <Font size="16.0" />
+                        <Font name="Georgia" size="16.0" />
                      </font>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Logout">
@@ -478,7 +486,7 @@
                         <Insets top="135.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="16.0" />
+                        <Font name="Georgia" size="16.0" />
                      </font>
                   </Button>
                </children>
