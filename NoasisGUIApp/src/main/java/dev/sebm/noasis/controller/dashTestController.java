@@ -27,10 +27,10 @@ public class dashTestController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        makeImageViewResponsive(home, menubox);
-        makeImageViewResponsive(share, menubox);
-        makeImageViewResponsive(ai, menubox);
-        makeImageViewResponsive(logout, menubox);
+//        makeImageViewResponsive(home, menubox);
+//        makeImageViewResponsive(share, menubox);
+//        makeImageViewResponsive(ai, menubox);
+//        makeImageViewResponsive(logout, menubox);
 
 
         pane1.setVisible(false);
@@ -75,11 +75,11 @@ public class dashTestController implements Initializable {
 
     }
 
-    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
-        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.1)); // Adjust the multiplier as needed
-        imageView.fitWidthProperty().bind(vbox.widthProperty().multiply(0.8));   // Adjust the multiplier as needed
-
-    }
+//    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
+//        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.1)); // Adjust the multiplier as needed
+//        imageView.fitWidthProperty().bind(vbox.widthProperty().multiply(0.8));   // Adjust the multiplier as needed
+//
+//    }
 }
 
 

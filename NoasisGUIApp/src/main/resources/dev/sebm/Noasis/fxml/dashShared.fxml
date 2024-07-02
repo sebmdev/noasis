@@ -30,7 +30,7 @@
                   <Image url="@../assets/images/menu.png" />
                </image>
             </ImageView>
-            <Label layoutX="84.0" layoutY="10.0" text="Study Sets" textFill="#343c6a">
+            <Label layoutX="61.0" layoutY="10.0" text="Shared Study Sets" textFill="#343c6a">
                <font>
                   <Font name="Georgia" size="25.0" />
                </font>
@@ -449,14 +449,6 @@
                         </TilePane>
                      </content>
                   </ScrollPane>
-                  <Button text="Create Study Set" StackPane.alignment="BOTTOM_RIGHT">
-                     <StackPane.margin>
-                        <Insets bottom="50.0" right="50.0" />
-                     </StackPane.margin>
-                     <font>
-                        <Font name="Georgia" size="15.0" />
-                     </font>
-                  </Button>
                </children>
             </StackPane>
          </children>
