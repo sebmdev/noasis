@@ -187,7 +187,7 @@
                   </ImageView>
                </children>
             </VBox>
-            <Pane fx:id="pane2" layoutX="55.0" prefHeight="275.0" prefWidth="145.0" style="-fx-background-color: white;">
+            <Pane layoutX="55.0" prefHeight="275.0" prefWidth="145.0" style="-fx-background-color: white;">
                <children>
                   <VBox prefHeight="517.0" prefWidth="146.0" spacing="51.0">
                      <children>

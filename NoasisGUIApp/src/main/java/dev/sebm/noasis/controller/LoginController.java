@@ -1,18 +1,22 @@
 package dev.sebm.noasis.controller;
 
+import atlantafx.base.theme.Styles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.LoginSuccessResponse;
 import dev.sebm.noasis.util.SpringFXMLLoader;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
@@ -39,13 +43,14 @@ public class LoginController {
     @FXML private TextField tfPassword;
     @FXML private Button btnSubmit;
     @FXML private Label signUpLbl;
-<<<<<<< HEAD
-    @FXML private Label errorEmail, errorPswd;
-    @FXML private Button btnSubmit1;
+    @FXML private Label lblError;
+    @FXML private GridPane gridPane;
+    @FXML private ProgressIndicator progressIndicator;
+
     private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-=======
->>>>>>> 11814b5 (Added login functionality)
     CookieStore httpCookieStore = new BasicCookieStore();
+    private boolean emailInvalid = true;
+    private boolean pswdEmpty = true;
 
     private final Preferences preferences;
     private final SpringFXMLLoader springFXMLLoader;
@@ -68,31 +73,10 @@ public class LoginController {
             String email = tfEmail.getText();
             String password = tfPassword.getText();
 
-            if(!email.isEmpty()&&!password.isEmpty()){
-                if (email.matches(emailRegex)) {
-                    msgOkay(errorEmail, tfEmail);
-
-                    if(email.equals("Clyde@gmail.com")) {
-                        msgError(errorEmail, tfEmail, "Email Does Not Exist");
-                        return;
-                    }
-                    return;
-                }
-                else{
-                    msgError(errorEmail, tfEmail,"Invalid email format");
-                }
-            }
-            else{
-                if(email.isEmpty()){
-                    msgError(errorEmail, tfEmail, "Hey you, type something");}
-                if(password.isEmpty()){
-                    msgError(errorPswd, tfPassword, "Hey you, type something");
-                }
-                return;
-            }
-
-            System.out.println(email);
-            System.out.println(password);
+            tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+            tfPassword.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+            gridPane.setDisable(true);
+            progressIndicator.setVisible(true);
 
             try {
                 final HttpPost httpPost = new HttpPost("http://localhost:3000/login");
@@ -125,12 +109,22 @@ public class LoginController {
                     if (status >= 400) {
                         ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
                         System.out.println(errorResponse.getError());
+                        Platform.runLater(() -> {
+                            tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, true);
+                            tfPassword.pseudoClassStateChanged(Styles.STATE_DANGER, true);
+                            lblError.setVisible(true);
+                            lblError.setStyle("-fx-font-size: 10px;");
+                            lblError.setText(errorResponse.getError());
+
+                            gridPane.setDisable(false);
+                            progressIndicator.setVisible(false);
+                        });
                         return null;
                     }
+
                     if (entity != null) {
                         LoginSuccessResponse loginSuccessResponse = objectMapper
                                 .readValue(entity.getContent(), LoginSuccessResponse.class);
-
 
                         System.out.println(loginSuccessResponse);
                         System.out.println(loginSuccessResponse.getUser().getId());
@@ -143,19 +137,39 @@ public class LoginController {
                             }
                         }
 
-                        Parent pane;
-                        Stage stage = (Stage)(signUpLbl.getScene().getWindow());
-                        try {
-                            pane = springFXMLLoader.loadFXML("fxml/dashTEST");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        stage.getScene().setRoot(pane);
+                        Platform.runLater(() -> {
+                            Parent pane;
+                            Stage stage = (Stage)(signUpLbl.getScene().getWindow());
+                            try {
+                                pane = springFXMLLoader.loadFXML("fxml/dashTEST");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            stage.getScene().setRoot(pane);
+                            tfPassword.setDisable(false);
+                            tfEmail.setDisable(false);
+                            btnSubmit.setDisable(false);
+                        });
                     }
                     return null;
                 };
-                httpClient.execute(httpPost, responseHandler);
-                httpClient.close();
+
+                Thread thread = new Thread(() -> {
+                    try {
+                        httpClient.execute(httpPost, responseHandler);
+                        httpClient.close();
+                    } catch (IOException e) {
+                        Platform.runLater(() -> {
+                            lblError.setVisible(true);
+                            lblError.setStyle("-fx-font-size: 10px;");
+                            lblError.setText("An error occurred. Please try again later.");
+                            gridPane.setDisable(false);
+                            progressIndicator.setVisible(false);
+                        });
+                    }
+                });
+                thread.start();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -172,11 +186,39 @@ public class LoginController {
             stage.getScene().setRoot(pane);
         });
 
-        tfEmail.setOnMouseClicked(_ -> {
-            msgOkay(errorEmail, tfEmail);
+        tfEmail.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (!newPropertyValue)
+                {
+                    msgOkay(lblError);
+                    tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+                }
+            }
         });
-        tfPassword.setOnMouseClicked(_ -> {
-            msgOkay(errorPswd, tfPassword);
+
+        tfPassword.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (!newPropertyValue)
+                {
+                    msgOkay(lblError);
+                    tfPassword.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+                }
+            }
+        });
+
+        tfEmail.setOnMouseClicked(_ -> {
+            msgOkay(lblError);
+            tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+        });
+
+        tfPassword.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                pswdEmpty = newValue.isEmpty();
+                btnSubmit.setDisable(emailInvalid || pswdEmpty);
+            }
         });
 
         tfEmail.textProperty().addListener(new ChangeListener<String>() {
@@ -184,30 +226,25 @@ public class LoginController {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // Check if the email matches the regex
                 if (!newValue.matches(emailRegex)) {
-                    msgError(errorEmail, tfEmail, "Invalid email format");
-                    return;
+                    tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, true);
+                    lblError.setVisible(true);
+                    lblError.setStyle("-fx-font-size: 10px;");
+                    lblError.setText("Invalid email format");
+                    emailInvalid = true;
                 } else {
-                    msgOkay(errorEmail, tfEmail);
+                    msgOkay(lblError);
+                    tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
+                    emailInvalid = false;
                 }
+                btnSubmit.setDisable(emailInvalid || pswdEmpty);
             }
         });
         // Any other initialization code
 
     }
-<<<<<<< HEAD
 
-    private void msgError(Label errorLabel, TextField tf, String errorMsg){
-        errorLabel.setVisible(true);
-        errorLabel.setText(errorMsg);
-        errorLabel.setStyle("-fx-font-size: 10px;");
-        tf.setStyle("-fx-border-color: red;");
-    }
-
-    private void msgOkay(Label errorLabel, TextField tf){
+    private void msgOkay(Label errorLabel){
         errorLabel.setStyle("-fx-font-size: 1px;");
         errorLabel.setVisible(false);
-        tf.setStyle("-fx-border-color: none;");
     }
-=======
->>>>>>> 11814b5 (Added login functionality)
 }

@@ -7,6 +7,11 @@ export default async function Login(req: Request, res: Response) {
   try {
     const email = req.body.email
     const password = req.body.password
+
+    console.log(req.body)
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    await delay(2000)
+
     if (!email) {
       return res.status(400).json({
         error: 'Email not provided.',
