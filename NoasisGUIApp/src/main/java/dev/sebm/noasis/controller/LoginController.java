@@ -121,7 +121,6 @@ public class LoginController {
                         });
                         return null;
                     }
-
                     if (entity != null) {
                         LoginSuccessResponse loginSuccessResponse = objectMapper
                                 .readValue(entity.getContent(), LoginSuccessResponse.class);
@@ -183,7 +182,8 @@ public class LoginController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            stage.getScene().setRoot(pane);
+
+                stage.getScene().setRoot(pane);
         });
 
         tfEmail.focusedProperty().addListener(new ChangeListener<Boolean>() {

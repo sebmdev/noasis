@@ -1,36 +1,43 @@
 package dev.sebm.noasis.controller;
 
+import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
 public class dashTestController implements Initializable {
-    @FXML
-    private ImageView menu, home, share, ai, logout;
+    @FXML private ImageView menu, home, share, ai, logout;
+    @FXML private AnchorPane pane1, pane2, mainAncrhoPane;
+    @FXML private VBox menubox;
+    @FXML private Button sharedBtn;
 
-    @FXML
-    private AnchorPane pane1, pane2;
+    private final SpringFXMLLoader springFXMLLoader;
 
-    @FXML
-    private VBox menubox;
+    public dashTestController(SpringFXMLLoader springFXMLLoader) {
+        this.springFXMLLoader = springFXMLLoader;
+    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        makeImageViewResponsive(home, menubox);
-        makeImageViewResponsive(share, menubox);
-        makeImageViewResponsive(ai, menubox);
-        makeImageViewResponsive(logout, menubox);
+//        makeImageViewResponsive(home, menubox);
+//        makeImageViewResponsive(share, menubox);
+//        makeImageViewResponsive(ai, menubox);
+//        makeImageViewResponsive(logout, menubox);
 
 
         pane1.setVisible(false);
@@ -73,13 +80,28 @@ public class dashTestController implements Initializable {
 
         });
 
-    }
-
-    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
-        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.1)); // Adjust the multiplier as needed
-        imageView.fitWidthProperty().bind(vbox.widthProperty().multiply(0.8));   // Adjust the multiplier as needed
+        sharedBtn.setOnMouseClicked(event -> {
+            loadMainContent("fxml/dashShared");
+        });
 
     }
+
+    private void loadMainContent(String fxmlPath){
+        try {
+            FXMLLoader loader = springFXMLLoader.getLoader(fxmlPath);
+            Parent root = loader.load();
+            AnchorPane mainContent = (AnchorPane) root.lookup("#sharedAnchorpane");
+            mainAncrhoPane.getChildren().setAll(mainContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
+//        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.1)); // Adjust the multiplier as needed
+//        imageView.fitWidthProperty().bind(vbox.widthProperty().multiply(0.8));   // Adjust the multiplier as needed
+//
+//    }
 }
 
 
