@@ -7,14 +7,18 @@ import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -22,14 +26,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.prefs.Preferences;
-
-import static dev.sebm.noasis.util.General.msgError;
-import static dev.sebm.noasis.util.General.msgOkay;
 
 @Component
 public class LoginController {
@@ -40,8 +42,8 @@ public class LoginController {
     @FXML private Button btnSubmit;
     @FXML private Label signUpLbl;
     @FXML private Label errorEmail, errorPswd;
-
-    private final String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    @FXML private Button btnSubmit1;
+    private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     CookieStore httpCookieStore = new BasicCookieStore();
 
     private Preferences preferences;
@@ -56,8 +58,12 @@ public class LoginController {
 
     public void initialize() {
         this.preferences.put("session_cookie", "abc123");
-        imageAnchorPane.heightProperty().addListener((_, _, t1) -> asideImage.setFitHeight(t1.doubleValue()));
-        imageAnchorPane.widthProperty().addListener((_, _, t1) -> asideImage.setFitWidth(t1.doubleValue()));
+        imageAnchorPane.heightProperty().addListener((_, _, t1) -> {
+            asideImage.setFitHeight(t1.doubleValue());
+        });
+        imageAnchorPane.widthProperty().addListener((_, _, t1) -> {
+            asideImage.setFitWidth(t1.doubleValue());
+        });
 
         btnSubmit.setOnMouseClicked(_ -> {
             String email = tfEmail.getText();
@@ -66,10 +72,12 @@ public class LoginController {
             if(!email.isEmpty()&&!password.isEmpty()){
                 if (email.matches(emailRegex)) {
                     msgOkay(errorEmail, tfEmail);
+
                     if(email.equals("Clyde@gmail.com")) {
                         msgError(errorEmail, tfEmail, "Email Does Not Exist");
                         return;
                     }
+                    return;
                 }
                 else{
                     msgError(errorEmail, tfEmail,"Invalid email format");
@@ -141,15 +149,20 @@ public class LoginController {
                 stage.getScene().setRoot(pane);
         });
 
-        tfEmail.setOnMouseClicked(_ -> msgOkay(errorEmail, tfEmail));
-        tfPassword.setOnMouseClicked(_ -> msgOkay(errorPswd, tfPassword));
+        tfEmail.setOnMouseClicked(_ -> {
+            msgOkay(errorEmail, tfEmail);
+        });
+        tfPassword.setOnMouseClicked(_ -> {
+            msgOkay(errorPswd, tfPassword);
+        });
 
-        tfEmail.textProperty().addListener(new ChangeListener<>() {
+        tfEmail.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 // Check if the email matches the regex
                 if (!newValue.matches(emailRegex)) {
                     msgError(errorEmail, tfEmail, "Invalid email format");
+                    return;
                 } else {
                     msgOkay(errorEmail, tfEmail);
                 }
@@ -159,4 +172,16 @@ public class LoginController {
 
     }
 
+    private void msgError(Label errorLabel, TextField tf, String errorMsg){
+        errorLabel.setVisible(true);
+        errorLabel.setText(errorMsg);
+        errorLabel.setStyle("-fx-font-size: 10px;");
+        tf.setStyle("-fx-border-color: red;");
+    }
+
+    private void msgOkay(Label errorLabel, TextField tf){
+        errorLabel.setStyle("-fx-font-size: 1px;");
+        errorLabel.setVisible(false);
+        tf.setStyle("-fx-border-color: none;");
+    }
 }
