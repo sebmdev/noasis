@@ -118,7 +118,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="mainAncrhoPane" layoutX="62.0" layoutY="48.0" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane layoutX="62.0" layoutY="48.0" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
             <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -471,7 +471,7 @@
                         <Font name="Georgia" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="sharedBtn" mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Shared Sets">
+                  <Button mnemonicParsing="false" prefHeight="43.0" prefWidth="162.0" text="Shared Sets">
                      <font>
                         <Font name="Georgia" size="16.0" />
                      </font>

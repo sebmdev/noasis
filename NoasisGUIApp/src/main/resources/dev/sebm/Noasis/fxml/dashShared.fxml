@@ -118,7 +118,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="sharedAnchorpane" layoutX="62.0" layoutY="48.0" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane layoutX="62.0" layoutY="48.0" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
             <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>

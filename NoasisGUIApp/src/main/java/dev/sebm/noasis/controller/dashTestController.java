@@ -1,35 +1,28 @@
 package dev.sebm.noasis.controller;
 
-import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
 public class dashTestController implements Initializable {
-    @FXML private ImageView menu, home, share, ai, logout;
-    @FXML private AnchorPane pane1, pane2, mainAncrhoPane;
-    @FXML private VBox menubox;
-    @FXML private Button sharedBtn;
+    @FXML
+    private ImageView menu, home, share, ai, logout;
 
-    private final SpringFXMLLoader springFXMLLoader;
+    @FXML
+    private AnchorPane pane1, pane2;
 
-    public dashTestController(SpringFXMLLoader springFXMLLoader) {
-        this.springFXMLLoader = springFXMLLoader;
-    }
+    @FXML
+    private VBox menubox;
 
 
     @Override
@@ -80,21 +73,6 @@ public class dashTestController implements Initializable {
 
         });
 
-        sharedBtn.setOnMouseClicked(event -> {
-            loadMainContent("fxml/dashShared");
-        });
-
-    }
-
-    private void loadMainContent(String fxmlPath){
-        try {
-            FXMLLoader loader = springFXMLLoader.getLoader(fxmlPath);
-            Parent root = loader.load();
-            AnchorPane mainContent = (AnchorPane) root.lookup("#sharedAnchorpane");
-            mainAncrhoPane.getChildren().setAll(mainContent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 //    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
