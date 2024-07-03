@@ -36,7 +36,7 @@ public class NoasisApplication extends Application {
         Scene scene;
         SpringFXMLLoader springFXMLLoader = applicationContext.getBean(SpringFXMLLoader.class);
         try {
-            scene = new Scene(springFXMLLoader.loadFXML("fxml/dashShared"), 640, 480);
+            scene = new Scene(springFXMLLoader.loadFXML("fxml/login"), 640, 480);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
