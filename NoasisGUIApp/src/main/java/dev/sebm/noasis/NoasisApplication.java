@@ -50,7 +50,7 @@ public class NoasisApplication extends Application {
             System.out.println("Session cookie found: " + sessionCookie);
             // Load the main application scene
             try {
-                scene = new Scene(springFXMLLoader.loadFXML("fxml/dashboard"), 800, 600);
+                scene = new Scene(springFXMLLoader.loadFXML("fxml/dashHome"), 800, 600);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
