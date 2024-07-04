@@ -20,7 +20,7 @@ public class MainApplication{
 
     double x, y = 0;
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("src/main/resources/dev/sebm/Noasis/fxml/dashTEST.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("src/main/resources/dev/sebm/Noasis/fxml/dashHome.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
 
         root.setOnMousePressed(event -> {
