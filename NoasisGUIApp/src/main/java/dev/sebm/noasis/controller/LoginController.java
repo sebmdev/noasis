@@ -46,6 +46,7 @@ public class LoginController {
     @FXML private Label lblError;
     @FXML private GridPane gridPane;
     @FXML private ProgressIndicator progressIndicator;
+    @FXML private Label lblMessage;
 
     private String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     CookieStore httpCookieStore = new BasicCookieStore();
@@ -192,6 +193,7 @@ public class LoginController {
                 if (!newPropertyValue)
                 {
                     msgOkay(lblError);
+                    clearMessage();
                     tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
                 }
             }
@@ -203,6 +205,7 @@ public class LoginController {
                 if (!newPropertyValue)
                 {
                     msgOkay(lblError);
+                    clearMessage();
                     tfPassword.pseudoClassStateChanged(Styles.STATE_DANGER, false);
                 }
             }
@@ -241,6 +244,18 @@ public class LoginController {
         });
         // Any other initialization code
 
+    }
+
+    private void clearMessage() {
+        lblMessage.setVisible(false);
+        lblMessage.setStyle("-fx-font-size: 10px;");
+        lblMessage.setText("");
+    }
+
+    public void showNotification(String message) {
+        lblMessage.setText(message);
+        lblMessage.setStyle("-fx-font-size: 10px;");
+        lblMessage.setVisible(true);
     }
 
     private void msgOkay(Label errorLabel){

@@ -21,6 +21,7 @@ public class SpringFXMLLoader {
         fxmlLoader.setControllerFactory(applicationContext::getBean);
         return fxmlLoader.load();
     }
+
     public FXMLLoader getLoader(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader(NoasisApplication.class.getResource(fxml + ".fxml"));
         fxmlLoader.setControllerFactory(applicationContext::getBean);

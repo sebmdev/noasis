@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,102 +13,113 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.RegisterController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.RegisterController">
    <children>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="2147483647">
+      <GridPane fx:id="gridPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <VBox fx:id="errorLbl" maxWidth="400.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowSpan="2147483647">
                <children>
-                  <Label text="noasis">
-                     <font>
-                        <Font name="Lucida Bright" size="28.0" />
-                     </font>
-                     <VBox.margin>
+                  <VBox fx:id="errorLbl" maxWidth="400.0">
+                     <children>
+                        <Label text="noasis">
+                           <font>
+                              <Font name="Lucida Bright" size="28.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Refresh your mind, sharpen your memory.">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Symbol" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblError" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textFill="RED">
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                        </Label>
+                        <Label text="Email" />
+                        <TextField fx:id="tfEmail">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label text="Password" />
+                        <PasswordField fx:id="tfPassword">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Label text="Confirm Password" />
+                        <PasswordField fx:id="tfConfirmPassword">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Button fx:id="btnSubmit" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Sign Up">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="ErrorLabel" textFill="RED" visible="false">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Already have an account?">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="loginLbl" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: -color-accent-3;" text="Login" textFill="#1111cc">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
                         <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Refresh your mind, sharpen your memory.">
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Symbol" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Email" />
-                  <TextField>
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label text="Password" />
-                  <PasswordField>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Label text="Confirm Password" />
-                  <PasswordField>
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Button fx:id="signUp" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="accent" text="Sign Up">
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="ErrorLabel" textFill="RED" visible="false">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Already have an account?">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="loginLbl" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" style="-fx-text-fill: -color-accent-3;" text="Login" textFill="#1111cc">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
+                     </opaqueInsets>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </VBox>
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
             </VBox>
+            <AnchorPane fx:id="imageAnchorPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowSpan="2147483647">
+               <children>
+                  <ImageView fx:id="asideImage" fitHeight="600.0" fitWidth="540.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../assets/images/login-art.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
          </children>
-      </VBox>
-      <AnchorPane fx:id="imageAnchorPane" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowSpan="2147483647">
-         <children>
-            <ImageView fx:id="asideImage" fitHeight="600.0" fitWidth="540.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../assets/images/login-art.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      </GridPane>
+      <ProgressIndicator fx:id="progressIndicator" visible="false" />
    </children>
-</GridPane>
+</StackPane>

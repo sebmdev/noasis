@@ -1,9 +1,15 @@
 package dev.sebm.noasis.controller;
 
+import atlantafx.base.theme.Styles;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sebm.noasis.jsonresponses.ErrorResponse;
+import dev.sebm.noasis.jsonresponses.LoginSuccessResponse;
+import dev.sebm.noasis.jsonresponses.LogoutSuccessResponse;
 import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,12 +18,28 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 @Component
 public class DashHomeController implements Initializable {
@@ -25,12 +47,18 @@ public class DashHomeController implements Initializable {
     @FXML private AnchorPane pane1, pane2, mainAncrhoPane;
     @FXML private VBox menubox;
     @FXML private Button sharedBtn;
+    @FXML private Button btnLogout;
 
     private final SpringFXMLLoader springFXMLLoader;
+    private final Preferences preferences;
     private Boolean isAnimationInProgress = false;
+    private CustomCookieStore customCookieStore;
 
-    public DashHomeController(SpringFXMLLoader springFXMLLoader) {
+
+    public DashHomeController(Preferences preferences, SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
+        this.preferences = preferences.node("session");
+        this.customCookieStore = new CustomCookieStore(this.preferences);
     }
 
 
@@ -94,7 +122,6 @@ public class DashHomeController implements Initializable {
                 parallelTransition.play();
 
                 isAnimationInProgress = true;
-                System.out.print("HELLOdfsdfdfs");
             }
         });
 
@@ -118,6 +145,75 @@ public class DashHomeController implements Initializable {
             loadMainContent("fxml/dashShared");
         });
 
+        btnLogout.setOnMouseClicked(event -> {
+            for (Cookie cookie : customCookieStore.getCookies()) {
+                System.out.println(cookie.getName() + ": "+ cookie.getValue());
+            }
+
+            try {
+                final HttpDelete httpPost = new HttpDelete("http://localhost:3000/logout");
+
+                httpPost.setHeader("Accept", "application/json");
+                httpPost.setHeader("Content-type", "application/json");
+
+                CloseableHttpClient httpClient = HttpClientBuilder
+                        .create()
+                        .setDefaultCookieStore(customCookieStore)
+                        .setDefaultRequestConfig(RequestConfig
+                                .custom()
+                                .setCookieSpec(CookieSpecs.STANDARD)
+                                .build())
+                        .build();
+
+                ResponseHandler<String> responseHandler = response -> {
+                    int status = response.getStatusLine().getStatusCode();
+                    System.out.println(response.getEntity().toString());
+                    HttpEntity entity = response.getEntity();
+                    ObjectMapper objectMapper = new ObjectMapper();
+
+                    if (status >= 400) {
+                        ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
+                        System.out.println(errorResponse.getError());
+                        Platform.runLater(() -> {
+                            Parent pane;
+                            Stage stage = (Stage)(mainAncrhoPane.getScene().getWindow());
+                            try {
+                                pane = springFXMLLoader.loadFXML("fxml/login");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            stage.getScene().setRoot(pane);
+                        });
+                        return null;
+                    }
+                    if (entity != null) {
+                        LogoutSuccessResponse logoutSuccessResponse = objectMapper
+                                .readValue(entity.getContent(), LogoutSuccessResponse.class);
+
+                        System.out.println(logoutSuccessResponse);
+                        System.out.println(logoutSuccessResponse.getMessage());
+                        preferences.remove("connect.sid");
+                    }
+                    return null;
+                };
+
+                Thread thread = new Thread(() -> {
+                    try {
+                        httpClient.execute(httpPost, responseHandler);
+                        httpClient.close();
+                    } catch (IOException e) {
+                        Platform.runLater(() -> {
+                        });
+                    }
+                });
+                thread.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
     }
 
     private void loadMainContent(String fxmlPath){
@@ -128,6 +224,44 @@ public class DashHomeController implements Initializable {
             mainAncrhoPane.getChildren().setAll(mainContent);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class CustomCookieStore implements CookieStore {
+        private final BasicCookieStore store;
+
+        public CustomCookieStore(Preferences preferences) {
+            this.store = new BasicCookieStore();
+
+            // Load the session cookie from preferences
+            String sessionCookieValue = preferences.get("connect.sid", "");
+            System.out.println("LOADED SESSION COOKIE: " + sessionCookieValue);
+            if (sessionCookieValue != null) {
+                BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
+                sessionCookie.setPath("/");
+                sessionCookie.setDomain("localhost");
+                store.addCookie(sessionCookie);
+            }
+        }
+
+        @Override
+        public void addCookie(Cookie cookie) {
+            store.addCookie(cookie);
+        }
+
+        @Override
+        public List<Cookie> getCookies() {
+            return store.getCookies();
+        }
+
+        @Override
+        public boolean clearExpired(java.util.Date date) {
+            return store.clearExpired(date);
+        }
+
+        @Override
+        public void clear() {
+            store.clear();
         }
     }
 
