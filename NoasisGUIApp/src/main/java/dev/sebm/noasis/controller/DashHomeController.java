@@ -52,13 +52,11 @@ public class DashHomeController implements Initializable {
     private final SpringFXMLLoader springFXMLLoader;
     private final Preferences preferences;
     private Boolean isAnimationInProgress = false;
-    private CustomCookieStore customCookieStore;
-
+    private CookieStore httpCookieStore = new BasicCookieStore();
 
     public DashHomeController(Preferences preferences, SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
         this.preferences = preferences.node("session");
-        this.customCookieStore = new CustomCookieStore(this.preferences);
     }
 
 
@@ -69,6 +67,14 @@ public class DashHomeController implements Initializable {
 //        makeImageViewResponsive(ai, menubox);
 //        makeImageViewResponsive(logout, menubox);
 
+        String sessionCookieValue = preferences.get("connect.sid", "none");
+        System.out.println("LOADED SESSION COOKIE: " + sessionCookieValue);
+        if (sessionCookieValue != null) {
+            BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
+            sessionCookie.setPath("/");
+            sessionCookie.setDomain("localhost");
+            httpCookieStore.addCookie(sessionCookie);
+        }
 
         pane1.setVisible(false);
 
@@ -104,8 +110,6 @@ public class DashHomeController implements Initializable {
                 isAnimationInProgress = true;
                 System.out.print("HELLO");
             } else {
-
-
                 // If pane1 is not visible, fade it in quickly and slide pane2 to the right
                 pane1.setVisible(true);
 
@@ -146,7 +150,7 @@ public class DashHomeController implements Initializable {
         });
 
         btnLogout.setOnMouseClicked(event -> {
-            for (Cookie cookie : customCookieStore.getCookies()) {
+            for (Cookie cookie : httpCookieStore.getCookies()) {
                 System.out.println(cookie.getName() + ": "+ cookie.getValue());
             }
 
@@ -158,7 +162,7 @@ public class DashHomeController implements Initializable {
 
                 CloseableHttpClient httpClient = HttpClientBuilder
                         .create()
-                        .setDefaultCookieStore(customCookieStore)
+                        .setDefaultCookieStore(httpCookieStore)
                         .setDefaultRequestConfig(RequestConfig
                                 .custom()
                                 .setCookieSpec(CookieSpecs.STANDARD)
@@ -194,6 +198,18 @@ public class DashHomeController implements Initializable {
                         System.out.println(logoutSuccessResponse);
                         System.out.println(logoutSuccessResponse.getMessage());
                         preferences.remove("connect.sid");
+
+                        Platform.runLater(() -> {
+                            Parent pane;
+                            Stage stage = (Stage)(btnLogout.getScene().getWindow());
+                            try {
+                                pane = springFXMLLoader.loadFXML("fxml/login");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            stage.getScene().setRoot(pane);
+                        });
                     }
                     return null;
                 };
@@ -224,44 +240,6 @@ public class DashHomeController implements Initializable {
             mainAncrhoPane.getChildren().setAll(mainContent);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static class CustomCookieStore implements CookieStore {
-        private final BasicCookieStore store;
-
-        public CustomCookieStore(Preferences preferences) {
-            this.store = new BasicCookieStore();
-
-            // Load the session cookie from preferences
-            String sessionCookieValue = preferences.get("connect.sid", "");
-            System.out.println("LOADED SESSION COOKIE: " + sessionCookieValue);
-            if (sessionCookieValue != null) {
-                BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
-                sessionCookie.setPath("/");
-                sessionCookie.setDomain("localhost");
-                store.addCookie(sessionCookie);
-            }
-        }
-
-        @Override
-        public void addCookie(Cookie cookie) {
-            store.addCookie(cookie);
-        }
-
-        @Override
-        public List<Cookie> getCookies() {
-            return store.getCookies();
-        }
-
-        @Override
-        public boolean clearExpired(java.util.Date date) {
-            return store.clearExpired(date);
-        }
-
-        @Override
-        public void clear() {
-            store.clear();
         }
     }
 
