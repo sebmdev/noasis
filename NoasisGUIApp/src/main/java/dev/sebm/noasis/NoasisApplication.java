@@ -22,6 +22,7 @@ public class NoasisApplication extends Application {
     @Override
     public void init() {
         applicationContext = new SpringApplicationBuilder(MainApplication.class).run();
+        Arrays.asList(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
     }
 
     @Override
