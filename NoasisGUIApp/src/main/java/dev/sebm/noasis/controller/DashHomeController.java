@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -46,7 +47,7 @@ public class DashHomeController implements Initializable {
     @FXML private ImageView menu, home, share, ai, logout;
     @FXML private AnchorPane pane1, pane2, mainAncrhoPane;
     @FXML private VBox menubox;
-    @FXML private Button sharedBtn;
+    @FXML private Button sharedBtn,studySetsBtn;
     @FXML private Button btnLogout;
 
     private final SpringFXMLLoader springFXMLLoader;
@@ -124,7 +125,7 @@ public class DashHomeController implements Initializable {
                 ParallelTransition parallelTransition = new ParallelTransition(fadeInTransition, slideRightTransition);
                 parallelTransition.setOnFinished(event1 -> isAnimationInProgress = false);
                 parallelTransition.play();
-
+                System.out.print("HELLOoooooo");
                 isAnimationInProgress = true;
             }
         });
@@ -146,7 +147,33 @@ public class DashHomeController implements Initializable {
 //        });
 
         sharedBtn.setOnMouseClicked(event -> {
-            loadMainContent("fxml/dashShared");
+            Parent pane;
+            Stage stage = (Stage)(sharedBtn.getScene().getWindow());
+            try {
+                pane = springFXMLLoader.loadFXML("fxml/dashShared");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.getScene().setRoot(pane);
+
+            // Optionally, you can also set a new scene if required
+            // stage.setScene(new Scene(root));
+
+        });
+
+        studySetsBtn.setOnMouseClicked(event -> {
+            Parent pane;
+            Stage stage = (Stage)(studySetsBtn.getScene().getWindow());
+            try {
+                pane = springFXMLLoader.loadFXML("fxml/dashHome");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            stage.getScene().setRoot(pane);
+
+            // Optionally, you can also set a new scene if required
+            // stage.setScene(new Scene(root));
+
         });
 
         btnLogout.setOnMouseClicked(event -> {
@@ -232,16 +259,41 @@ public class DashHomeController implements Initializable {
 
     }
 
-    private void loadMainContent(String fxmlPath){
+    private void loadMainContent(String fxmlPath) {
         try {
             FXMLLoader loader = springFXMLLoader.getLoader(fxmlPath);
             Parent root = loader.load();
             AnchorPane mainContent = (AnchorPane) root.lookup("#sharedAnchorpane");
-            mainAncrhoPane.getChildren().setAll(mainContent);
+
+            if (mainContent != null) {
+                // Clear existing content but keep pane1 and pane2
+                mainAncrhoPane.getChildren().clear();
+                mainAncrhoPane.getChildren().add(mainContent);
+
+                // Ensure pane1 and pane2 are on top
+                mainAncrhoPane.getChildren().add(pane1);
+                mainAncrhoPane.getChildren().add(pane2);
+
+                // Set the anchor constraints to ensure the content fills the pane
+                AnchorPane.setTopAnchor(mainContent, 0.0);
+                AnchorPane.setBottomAnchor(mainContent, 0.0);
+                AnchorPane.setLeftAnchor(mainContent, 0.0);
+                AnchorPane.setRightAnchor(mainContent, 0.0);
+
+                // Restore pane1 and pane2 to their expected positions
+                AnchorPane.setTopAnchor(pane1, 10.0); // Adjust as necessary
+                AnchorPane.setLeftAnchor(pane1, 10.0); // Adjust as necessary
+
+                AnchorPane.setTopAnchor(pane2, 10.0); // Adjust as necessary
+                AnchorPane.setRightAnchor(pane2, 10.0); // Adjust as necessary
+            } else {
+                System.out.println("No AnchorPane with id 'sharedAnchorpane' found in the loaded FXML.");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 //    private void makeImageViewResponsive(ImageView imageView, VBox vbox) {
 //        imageView.fitHeightProperty().bind(vbox.heightProperty().multiply(0.1)); // Adjust the multiplier as needed

@@ -39,29 +39,24 @@ public class NoasisApplication extends Application {
         Preferences preferences = applicationContext.getBean(Preferences.class).node("session");
         String sessionCookie = preferences.get("connect.sid", "none");
 
-//        if (sessionCookie.equals("none")) {
-//            System.out.println("No session cookie found. Loading login scene.");
-//            // Load the login scene
-//            try {
-//                scene = new Scene(springFXMLLoader.loadFXML("fxml/login"), 640, 480);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        } else {
-//            System.out.println("Session cookie found: " + sessionCookie);
-//            // Load the main application scene
-//            try {
-//                scene = new Scene(springFXMLLoader.loadFXML("fxml/dashHome"), 800, 600);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-
-        try {
-            scene = new Scene(springFXMLLoader.loadFXML("fxml/dashCards"), 640, 480);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (sessionCookie.equals("none")) {
+            System.out.println("No session cookie found. Loading login scene.");
+            // Load the login scene
+            try {
+                scene = new Scene(springFXMLLoader.loadFXML("fxml/login"), 640, 480);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Session cookie found: " + sessionCookie);
+            // Load the main application scene
+            try {
+                scene = new Scene(springFXMLLoader.loadFXML("fxml/dashHome"), 800, 600);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+
         stage.setTitle("Noasis");
         stage.setHeight(600);
         stage.setWidth(800);
