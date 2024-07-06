@@ -46,9 +46,6 @@ import java.util.prefs.Preferences;
 public class DashHomeController implements Initializable {
     @FXML private ImageView menu, home, share, ai, logout;
     @FXML private AnchorPane pane1, pane2, mainAncrhoPane;
-    @FXML private VBox menubox;
-    @FXML private Button sharedBtn,studySetsBtn;
-    @FXML private Button btnLogout;
 
     private final SpringFXMLLoader springFXMLLoader;
     private final Preferences preferences;
@@ -68,65 +65,6 @@ public class DashHomeController implements Initializable {
 //        makeImageViewResponsive(ai, menubox);
 //        makeImageViewResponsive(logout, menubox);
 
-        String sessionCookieValue = preferences.get("connect.sid", "none");
-        System.out.println("LOADED SESSION COOKIE: " + sessionCookieValue);
-        if (sessionCookieValue != null) {
-            BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
-            sessionCookie.setPath("/");
-            sessionCookie.setDomain("localhost");
-            httpCookieStore.addCookie(sessionCookie);
-        }
-
-        pane1.setVisible(false);
-
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), pane1);
-        fadeTransition.setFromValue(1);
-        fadeTransition.setToValue(0);
-        fadeTransition.play();
-
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), pane2);
-        translateTransition.setByX(-600);
-        translateTransition.play();
-
-        menu.setOnMouseClicked(event -> {
-            if(isAnimationInProgress) {
-                return;
-            }
-            if (pane1.isVisible()) {
-
-                // If pane1 is visible, fade it out quickly and slide pane2 to the left
-                FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(0.3), pane1);
-                fadeOutTransition.setFromValue(0.15);
-                fadeOutTransition.setToValue(0);
-                fadeOutTransition.setOnFinished(event1 -> pane1.setVisible(false));
-
-                TranslateTransition slideLeftTransition = new TranslateTransition(Duration.seconds(0.3), pane2);
-                slideLeftTransition.setByX(-600); // Adjust slide distance as needed
-
-                // Use parallel transition for simultaneous execution
-                ParallelTransition parallelTransition = new ParallelTransition(fadeOutTransition, slideLeftTransition);
-                parallelTransition.setOnFinished(event1 -> isAnimationInProgress = false);
-                parallelTransition.play();
-
-                isAnimationInProgress = true;
-            } else {
-                // If pane1 is not visible, fade it in quickly and slide pane2 to the right
-                pane1.setVisible(true);
-
-                FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(0.3), pane1);
-                fadeInTransition.setFromValue(0);
-                fadeInTransition.setToValue(0.15);
-
-                TranslateTransition slideRightTransition = new TranslateTransition(Duration.seconds(0.3), pane2);
-                slideRightTransition.setByX(+600); // Adjust slide distance as needed
-
-                // Use parallel transition for simultaneous execution
-                ParallelTransition parallelTransition = new ParallelTransition(fadeInTransition, slideRightTransition);
-                parallelTransition.setOnFinished(event1 -> isAnimationInProgress = false);
-                parallelTransition.play();
-                isAnimationInProgress = true;
-            }
-        });
 
 //        pane1.setOnMouseClicked(event -> {
 //            FadeTransition fadeTransition1 = new FadeTransition(Duration.seconds(0.5), pane1);
@@ -144,118 +82,89 @@ public class DashHomeController implements Initializable {
 //
 //        });
 
-        sharedBtn.setOnMouseClicked(event -> {
-            Parent pane;
-            Stage stage = (Stage)(sharedBtn.getScene().getWindow());
-            try {
-                pane = springFXMLLoader.loadFXML("fxml/dashShared");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.getScene().setRoot(pane);
 
-            // Optionally, you can also set a new scene if required
-            // stage.setScene(new Scene(root));
-
-        });
-
-        studySetsBtn.setOnMouseClicked(event -> {
-            Parent pane;
-            Stage stage = (Stage)(studySetsBtn.getScene().getWindow());
-            try {
-                pane = springFXMLLoader.loadFXML("fxml/dashHome");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stage.getScene().setRoot(pane);
-
-            // Optionally, you can also set a new scene if required
-            // stage.setScene(new Scene(root));
-
-        });
-
-        btnLogout.setOnMouseClicked(event -> {
-            for (Cookie cookie : httpCookieStore.getCookies()) {
-                System.out.println(cookie.getName() + ": "+ cookie.getValue());
-            }
-
-            try {
-                final HttpDelete httpPost = new HttpDelete("http://localhost:3000/logout");
-
-                httpPost.setHeader("Accept", "application/json");
-                httpPost.setHeader("Content-type", "application/json");
-
-                CloseableHttpClient httpClient = HttpClientBuilder
-                        .create()
-                        .setDefaultCookieStore(httpCookieStore)
-                        .setDefaultRequestConfig(RequestConfig
-                                .custom()
-                                .setCookieSpec(CookieSpecs.STANDARD)
-                                .build())
-                        .build();
-
-                ResponseHandler<String> responseHandler = response -> {
-                    int status = response.getStatusLine().getStatusCode();
-                    System.out.println(response.getEntity().toString());
-                    HttpEntity entity = response.getEntity();
-                    ObjectMapper objectMapper = new ObjectMapper();
-
-                    if (status >= 400) {
-                        ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
-                        System.out.println(errorResponse.getError());
-                        Platform.runLater(() -> {
-                            Parent pane;
-                            Stage stage = (Stage)(mainAncrhoPane.getScene().getWindow());
-                            try {
-                                pane = springFXMLLoader.loadFXML("fxml/login");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            stage.getScene().setRoot(pane);
-                        });
-                        return null;
-                    }
-                    if (entity != null) {
-                        LogoutSuccessResponse logoutSuccessResponse = objectMapper
-                                .readValue(entity.getContent(), LogoutSuccessResponse.class);
-
-                        System.out.println(logoutSuccessResponse);
-                        System.out.println(logoutSuccessResponse.getMessage());
-                        preferences.remove("connect.sid");
-
-                        Platform.runLater(() -> {
-                            Parent pane;
-                            Stage stage = (Stage)(btnLogout.getScene().getWindow());
-                            try {
-                                pane = springFXMLLoader.loadFXML("fxml/login");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            stage.getScene().setRoot(pane);
-                        });
-                    }
-                    return null;
-                };
-
-                Thread thread = new Thread(() -> {
-                    try {
-                        httpClient.execute(httpPost, responseHandler);
-                        httpClient.close();
-                    } catch (IOException e) {
-                        Platform.runLater(() -> {
-                        });
-                    }
-                });
-                thread.start();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-    }
+//        btnLogout.setOnMouseClicked(event -> {
+//            for (Cookie cookie : httpCookieStore.getCookies()) {
+//                System.out.println(cookie.getName() + ": "+ cookie.getValue());
+//            }
+//
+//            try {
+//                final HttpDelete httpPost = new HttpDelete("http://localhost:3000/logout");
+//
+//                httpPost.setHeader("Accept", "application/json");
+//                httpPost.setHeader("Content-type", "application/json");
+//
+//                CloseableHttpClient httpClient = HttpClientBuilder
+//                        .create()
+//                        .setDefaultCookieStore(httpCookieStore)
+//                        .setDefaultRequestConfig(RequestConfig
+//                                .custom()
+//                                .setCookieSpec(CookieSpecs.STANDARD)
+//                                .build())
+//                        .build();
+//
+//                ResponseHandler<String> responseHandler = response -> {
+//                    int status = response.getStatusLine().getStatusCode();
+//                    System.out.println(response.getEntity().toString());
+//                    HttpEntity entity = response.getEntity();
+//                    ObjectMapper objectMapper = new ObjectMapper();
+//
+//                    if (status >= 400) {
+//                        ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
+//                        System.out.println(errorResponse.getError());
+//                        Platform.runLater(() -> {
+//                            Parent pane;
+//                            Stage stage = (Stage)(mainAncrhoPane.getScene().getWindow());
+//                            try {
+//                                pane = springFXMLLoader.loadFXML("fxml/login");
+//                            } catch (IOException e) {
+//                                throw new RuntimeException(e);
+//                            }
+//
+//                            stage.getScene().setRoot(pane);
+//                        });
+//                        return null;
+//                    }
+//                    if (entity != null) {
+//                        LogoutSuccessResponse logoutSuccessResponse = objectMapper
+//                                .readValue(entity.getContent(), LogoutSuccessResponse.class);
+//
+//                        System.out.println(logoutSuccessResponse);
+//                        System.out.println(logoutSuccessResponse.getMessage());
+//                        preferences.remove("connect.sid");
+//
+//                        Platform.runLater(() -> {
+//                            Parent pane;
+//                            Stage stage = (Stage)(btnLogout.getScene().getWindow());
+//                            try {
+//                                pane = springFXMLLoader.loadFXML("fxml/login");
+//                            } catch (IOException e) {
+//                                throw new RuntimeException(e);
+//                            }
+//
+//                            stage.getScene().setRoot(pane);
+//                        });
+//                    }
+//                    return null;
+//                };
+//
+//                Thread thread = new Thread(() -> {
+//                    try {
+//                        httpClient.execute(httpPost, responseHandler);
+//                        httpClient.close();
+//                    } catch (IOException e) {
+//                        Platform.runLater(() -> {
+//                        });
+//                    }
+//                });
+//                thread.start();
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+   }
 
     private void loadMainContent(String fxmlPath) {
         try {

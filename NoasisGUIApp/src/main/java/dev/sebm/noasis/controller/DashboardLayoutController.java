@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -22,9 +23,9 @@ import java.util.ResourceBundle;
 @Component
 public class DashboardLayoutController implements Initializable {
     @FXML private Button btnToggleNav;
-    @FXML private AnchorPane nav;
+    @FXML private AnchorPane nav, dashHome, dashShared;
     @FXML private BorderPane borderPane;
-    @FXML private AnchorPane centerPane;
+    @FXML private StackPane centerPane;
 
     @FXML private Button btnStudySets;
     @FXML private Button btnSharedSets;
@@ -37,6 +38,10 @@ public class DashboardLayoutController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         navWidth = (int) nav.getPrefWidth();
+        dashHome.prefWidthProperty().bind(centerPane.widthProperty());
+        dashHome.prefHeightProperty().bind(centerPane.heightProperty());
+        dashShared.prefWidthProperty().bind(centerPane.widthProperty());
+        dashShared.prefHeightProperty().bind(centerPane.heightProperty());
 
         btnToggleNav.setOnMouseClicked(e -> {
             TranslateTransition slide = new TranslateTransition();
@@ -45,6 +50,17 @@ public class DashboardLayoutController implements Initializable {
 
             navOpened = !navOpened;
             adjustCenterPane();
+        });
+
+        btnStudySets.setOnMouseClicked(e->{
+            dashHome.toFront();
+            dashHome.setVisible(true);
+            dashShared.setVisible(false);
+        });
+        btnSharedSets.setOnMouseClicked(e->{
+            dashShared.toFront();
+            dashHome.setVisible(false);
+            dashShared.setVisible(true);
         });
     }
 

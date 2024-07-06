@@ -3,372 +3,347 @@
 <?import atlantafx.base.controls.Card?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.TilePane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.DashHomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" style="-fx-background-color: F5F7FA;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="50.0" prefWidth="1080.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="959.0" layoutY="7.0" text="noasis" textFill="#343c6a" AnchorPane.rightAnchor="20.0">
-               <font>
-                  <Font name="Lucida Bright" size="28.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="menu" fitHeight="29.0" fitWidth="26.0" layoutX="16.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assets/images/menu.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="61.0" layoutY="10.0" text="Shared Study Sets" textFill="#343c6a">
-               <font>
-                  <Font name="Georgia" size="25.0" />
-               </font>
-            </Label>
+            <ScrollPane hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS">
+               <content>
+                  <TilePane hgap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefColumns="8" tileAlignment="TOP_LEFT" vgap="50.0">
+                     <children>
+                        <Card prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Edit" />
+                                   <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="804.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1058.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1312.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1567.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="40.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="295.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="549.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="549.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1058.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1312.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1567.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1567.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="295.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="549.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="804.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1058.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1058.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1567.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="40.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="295.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="549.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="549.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1058.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1312.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                        <Card layoutX="1312.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Edit" />
+                                    <MenuItem mnemonicParsing="false" text="Share" />
+                                    <MenuItem mnemonicParsing="false" text="Delete" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </Card>
+                     </children>
+                     <padding>
+                        <Insets left="30.0" right="30.0" top="30.0" />
+                     </padding>
+                  </TilePane>
+               </content>
+            </ScrollPane>
          </children>
-      </AnchorPane>
-      <AnchorPane fx:id="sharedAnchorpane" layoutX="62.0" layoutY="48.0" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
-         <children>
-            <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ScrollPane hbarPolicy="ALWAYS" pannable="true" vbarPolicy="ALWAYS">
-                     <content>
-                        <TilePane hgap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefColumns="8" tileAlignment="TOP_LEFT" vgap="50.0">
-                           <children>
-                              <Card prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu></Card>
-                              <Card prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu></Card>
-                              <Card prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                      <items>
-                                        <MenuItem mnemonicParsing="false" text="Edit" />
-                                         <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                      </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu></Card>
-                              <Card layoutX="804.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1058.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1312.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1567.0" layoutY="40.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="40.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="295.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="549.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="549.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1058.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1312.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1567.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1567.0" layoutY="287.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="295.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="549.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="804.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1058.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1058.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1567.0" layoutY="533.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="40.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="295.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="549.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="549.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1058.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1312.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                              <Card layoutX="1312.0" layoutY="780.0" prefHeight="196.0" prefWidth="204.0">
-                                 <contextMenu>
-                                    <ContextMenu>
-                                       <items>
-                                          <MenuItem mnemonicParsing="false" text="Edit" />
-                                          <MenuItem mnemonicParsing="false" text="Share" />
-                                          <MenuItem mnemonicParsing="false" text="Delete" />
-                                       </items>
-                                    </ContextMenu>
-                                 </contextMenu>
-                              </Card>
-                           </children>
-                           <padding>
-                              <Insets left="30.0" right="30.0" top="30.0" />
-                           </padding>
-                        </TilePane>
-                     </content>
-                  </ScrollPane>
-               </children>
-            </StackPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="pane1" prefHeight="519.0" prefWidth="1080.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+      </StackPane>
    </children>
 </AnchorPane>
