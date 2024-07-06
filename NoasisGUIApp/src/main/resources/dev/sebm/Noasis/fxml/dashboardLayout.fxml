@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.DashboardLayoutController">
    <children>
-      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <AnchorPane prefHeight="60.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Pane prefHeight="60.0" style="-fx-background-color: #666666;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-         </top>
+      <BorderPane fx:id="borderPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <AnchorPane fx:id="nav" prefWidth="200.0" style="-fx-background-color: #eeeeee;" BorderPane.alignment="CENTER">
                <children>
@@ -26,17 +19,22 @@
                      <children>
                         <VBox>
                            <children>
-                              <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: none;" styleClass="flat" text="Study Sets">
+                              <Button fx:id="btnToggleNav" alignment="BASELINE_LEFT" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" style="-fx-underline: a;" styleClass="flat" text="Study Sets">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fa-navicon" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnStudySets" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: a;" styleClass="flat" text="Study Sets">
                                  <graphic>
                                     <FontIcon iconLiteral="bx-card" />
                                  </graphic>
                               </Button>
-                              <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: none;" styleClass="flat" text="Shared Sets">
+                              <Button fx:id="btnSharedSets" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: a;" styleClass="flat" text="Shared Sets">
                                  <graphic>
                                     <FontIcon iconLiteral="bx-group" />
                                  </graphic>
                               </Button>
-                              <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: none;" styleClass="flat" text="Generate with AI">
+                              <Button fx:id="btnGenerateWithAI" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: a;" styleClass="flat" text="Generate with AI">
                                  <graphic>
                                     <FontIcon iconLiteral="bxs-magic-wand" />
                                  </graphic>
@@ -44,29 +42,31 @@
                            </children>
                         </VBox>
                         <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <Button alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: none;" styleClass="flat" text="Study Sets">
-                           <graphic>
-                              <FontIcon iconLiteral="bx-card" />
-                           </graphic>
-                        </Button>
+                        <VBox>
+                           <children>
+                              <Button fx:id="btnLogout" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-underline: a;" text="Logout">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fa-sign-out" />
+                                 </graphic>
+                                 <styleClass>
+                                    <String fx:value="flat" />
+                                    <String fx:value="danger" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </children>
                <padding>
-                  <Insets bottom="15.0" top="15.0" />
+                  <Insets bottom="15.0" />
                </padding>
             </AnchorPane>
          </left>
          <center>
 <!--            <fx:include source="login.fxml" />-->
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btnToggleNav" layoutX="182.0" layoutY="145.0" mnemonicParsing="false" text="Button">
-                     <graphic>
-                        <FontIcon iconLiteral="fa-navicon" />
-                     </graphic>
-                  </Button>
-               </children>
+            <AnchorPane fx:id="centerPane" maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
+               <fx:include source="login.fxml" />
             </AnchorPane>
          </center>
       </BorderPane>
