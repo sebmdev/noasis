@@ -76,8 +76,8 @@ public class LoginController {
 
             tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
             tfPassword.pseudoClassStateChanged(Styles.STATE_DANGER, false);
-            gridPane.setDisable(true);
-            progressIndicator.setVisible(true);
+//            gridPane.setDisable(true);
+//            progressIndicator.setVisible(true);
 
             try {
                 final HttpPost httpPost = new HttpPost("http://localhost:3000/login");
@@ -117,8 +117,8 @@ public class LoginController {
                             lblError.setStyle("-fx-font-size: 10px;");
                             lblError.setText(errorResponse.getError());
 
-                            gridPane.setDisable(false);
-                            progressIndicator.setVisible(false);
+//                            gridPane.setDisable(false);
+//                            progressIndicator.setVisible(false);
                         });
                         return null;
                     }

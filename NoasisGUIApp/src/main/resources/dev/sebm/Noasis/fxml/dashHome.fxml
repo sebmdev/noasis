@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.DashHomeController">
    <children>
@@ -456,6 +457,9 @@
                      <font>
                         <Font name="Georgia" size="15.0" />
                      </font>
+                     <graphic>
+                        <FontIcon iconLiteral="fa-navicon" />
+                     </graphic>
                   </Button>
                </children>
             </StackPane>

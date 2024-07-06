@@ -109,7 +109,6 @@ public class DashHomeController implements Initializable {
                 parallelTransition.play();
 
                 isAnimationInProgress = true;
-                System.out.print("HELLO");
             } else {
                 // If pane1 is not visible, fade it in quickly and slide pane2 to the right
                 pane1.setVisible(true);
@@ -125,7 +124,6 @@ public class DashHomeController implements Initializable {
                 ParallelTransition parallelTransition = new ParallelTransition(fadeInTransition, slideRightTransition);
                 parallelTransition.setOnFinished(event1 -> isAnimationInProgress = false);
                 parallelTransition.play();
-                System.out.print("HELLOoooooo");
                 isAnimationInProgress = true;
             }
         });
