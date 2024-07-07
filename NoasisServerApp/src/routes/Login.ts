@@ -10,7 +10,7 @@ export default async function Login(req: Request, res: Response) {
 
     console.log(req.body)
     const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-    await delay(2000)
+    // await delay(2000)
 
     if (!email) {
       return res.status(400).json({
