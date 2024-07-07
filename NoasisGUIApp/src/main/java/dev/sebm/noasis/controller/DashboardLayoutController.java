@@ -1,12 +1,19 @@
 package dev.sebm.noasis.controller;
 
-import atlantafx.base.theme.Styles;
-import javafx.animation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sebm.noasis.jsonresponses.ErrorResponse;
+import dev.sebm.noasis.jsonresponses.LogoutSuccessResponse;
+import dev.sebm.noasis.util.SpringFXMLLoader;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.AnchorPane;
@@ -14,11 +21,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 @Component
 public class DashboardLayoutController implements Initializable {
@@ -32,11 +51,31 @@ public class DashboardLayoutController implements Initializable {
     @FXML private Button btnGenerateWithAI;
     @FXML private Button btnLogout;
 
+    private final CookieStore httpCookieStore = new BasicCookieStore();
+    private final SpringFXMLLoader springFXMLLoader;
+    private final Preferences preferences;
+
+
+    public DashboardLayoutController(Preferences preferences, SpringFXMLLoader springFXMLLoader) {
+        this.springFXMLLoader = springFXMLLoader;
+        this.preferences = preferences.node("session");
+    }
+
     private boolean navOpened = true;
     private int navWidth;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        String sessionCookieValue = preferences.get("connect.sid", "none");
+        System.out.println("LOADED SESSION COOKIE: " + sessionCookieValue);
+        if (sessionCookieValue != null) {
+            BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
+            sessionCookie.setPath("/");
+            sessionCookie.setDomain("localhost");
+            httpCookieStore.addCookie(sessionCookie);
+        }
+
         navWidth = (int) nav.getPrefWidth();
         dashHome.prefWidthProperty().bind(centerPane.widthProperty());
         dashHome.prefHeightProperty().bind(centerPane.heightProperty());
@@ -61,6 +100,87 @@ public class DashboardLayoutController implements Initializable {
             dashShared.toFront();
             dashHome.setVisible(false);
             dashShared.setVisible(true);
+        });
+
+        btnLogout.setOnMouseClicked(event -> {
+            for (Cookie cookie : httpCookieStore.getCookies()) {
+                System.out.println(cookie.getName() + ": "+ cookie.getValue());
+            }
+
+            try {
+                final HttpDelete httpPost = new HttpDelete("http://localhost:3000/logout");
+
+                httpPost.setHeader("Accept", "application/json");
+                httpPost.setHeader("Content-type", "application/json");
+
+                CloseableHttpClient httpClient = HttpClientBuilder
+                        .create()
+                        .setDefaultCookieStore(httpCookieStore)
+                        .setDefaultRequestConfig(RequestConfig
+                                .custom()
+                                .setCookieSpec(CookieSpecs.STANDARD)
+                                .build())
+                        .build();
+
+                ResponseHandler<String> responseHandler = response -> {
+                    int status = response.getStatusLine().getStatusCode();
+                    System.out.println(response.getEntity().toString());
+                    HttpEntity entity = response.getEntity();
+                    ObjectMapper objectMapper = new ObjectMapper();
+
+                    if (status >= 400) {
+                        ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
+                        System.out.println(errorResponse.getError());
+                        Platform.runLater(() -> {
+                            Parent pane;
+                            Stage stage = (Stage)(nav.getScene().getWindow());
+                            try {
+                                pane = springFXMLLoader.loadFXML("fxml/login");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            stage.getScene().setRoot(pane);
+                        });
+                        return null;
+                    }
+                    if (entity != null) {
+                        LogoutSuccessResponse logoutSuccessResponse = objectMapper
+                                .readValue(entity.getContent(), LogoutSuccessResponse.class);
+
+                        System.out.println(logoutSuccessResponse);
+                        System.out.println(logoutSuccessResponse.getMessage());
+                        preferences.remove("connect.sid");
+
+                        Platform.runLater(() -> {
+                            Parent pane;
+                            Stage stage = (Stage)(btnLogout.getScene().getWindow());
+                            try {
+                                pane = springFXMLLoader.loadFXML("fxml/login");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            stage.getScene().setRoot(pane);
+                        });
+                    }
+                    return null;
+                };
+
+                Thread thread = new Thread(() -> {
+                    try {
+                        httpClient.execute(httpPost, responseHandler);
+                        httpClient.close();
+                    } catch (IOException e) {
+                        Platform.runLater(() -> {
+                        });
+                    }
+                });
+                thread.start();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -118,7 +238,5 @@ public class DashboardLayoutController implements Initializable {
                 btnLogout.setAlignment(Pos.BASELINE_CENTER);
             });
         }
-
-
     }
 }

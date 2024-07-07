@@ -141,7 +141,7 @@ public class LoginController {
                             Parent pane;
                             Stage stage = (Stage)(signUpLbl.getScene().getWindow());
                             try {
-                                pane = springFXMLLoader.loadFXML("fxml/dashHome");
+                                pane = springFXMLLoader.loadFXML("fxml/dashboardLayout");
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

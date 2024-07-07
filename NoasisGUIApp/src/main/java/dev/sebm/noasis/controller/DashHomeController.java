@@ -1,5 +1,6 @@
 package dev.sebm.noasis.controller;
 
+import atlantafx.base.controls.Card;
 import atlantafx.base.theme.Styles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
@@ -16,9 +17,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.http.HttpEntity;
@@ -46,6 +52,8 @@ import java.util.prefs.Preferences;
 public class DashHomeController implements Initializable {
     @FXML private ImageView menu, home, share, ai, logout;
     @FXML private AnchorPane pane1, pane2, mainAncrhoPane;
+    @FXML private ScrollPane scrollPane;
+    @FXML private FlowPane flowPane;
 
     private final SpringFXMLLoader springFXMLLoader;
     private final Preferences preferences;
@@ -57,9 +65,26 @@ public class DashHomeController implements Initializable {
         this.preferences = preferences.node("session");
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        flowPane.prefWidthProperty().bind(scrollPane.widthProperty());
+
+        for (int i = 0; i < 10; i++) {
+            Card card = new Card();
+            card.setMinWidth(300);
+            card.setMinHeight(200);
+
+            Label title = new Label("Card title");
+            title.getStyleClass().add(Styles.TITLE_3);
+            card.setHeader(title);
+
+            TextFlow text = new TextFlow(new Text("Hello world!"));
+            text.setMaxWidth(260);
+            card.setBody(text);
+
+            flowPane.getChildren().add(card);
+        }
+
 //        makeImageViewResponsive(home, menubox);
 //        makeImageViewResponsive(share, menubox);
 //        makeImageViewResponsive(ai, menubox);
@@ -163,7 +188,7 @@ public class DashHomeController implements Initializable {
 //                e.printStackTrace();
 //            }
 //        });
-//
+
    }
 
     private void loadMainContent(String fxmlPath) {
