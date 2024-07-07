@@ -542,12 +542,24 @@
       </AnchorPane>
       <AnchorPane layoutX="83.2" layoutY="84.8" prefHeight="457.0" prefWidth="952.0" AnchorPane.bottomAnchor="58.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="85.0">
          <children>
-            <Label layoutX="33.0" layoutY="41.0" prefHeight="18.0" prefWidth="101.0" text="Term" />
-            <TextArea layoutX="32.0" layoutY="72.0" prefHeight="54.0" prefWidth="886.0" />
-            <Label layoutX="40.0" layoutY="147.0" prefHeight="18.0" prefWidth="101.0" text="Definition" />
+            <Label layoutX="40.0" layoutY="41.0" prefHeight="18.0" prefWidth="101.0" text="Term">
+               <font>
+                  <Font name="Georgia" size="17.0" />
+               </font></Label>
+            <TextArea layoutX="37.0" layoutY="72.0" prefHeight="54.0" prefWidth="886.0" />
+            <Label layoutX="40.0" layoutY="147.0" prefHeight="18.0" prefWidth="101.0" text="Definition">
+               <font>
+                  <Font name="Georgia" size="17.0" />
+               </font></Label>
             <TextArea layoutX="37.0" layoutY="179.0" prefHeight="215.0" prefWidth="890.0" />
-            <Button layoutX="885.0" layoutY="408.0" mnemonicParsing="false" text="Save" />
-            <Button layoutX="796.0" layoutY="408.0" mnemonicParsing="false" text="Cancel" />
+            <Button layoutX="885.0" layoutY="408.0" mnemonicParsing="false" style="-fx-background-color: #50C878;" text="Save">
+               <font>
+                  <Font name="Georgia" size="16.0" />
+               </font></Button>
+            <Button layoutX="796.0" layoutY="408.0" mnemonicParsing="false" style="-fx-background-color: #FF3131;" text="Cancel">
+               <font>
+                  <Font name="Georgia" size="15.0" />
+               </font></Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="pane1" prefHeight="519.0" prefWidth="1080.0" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />

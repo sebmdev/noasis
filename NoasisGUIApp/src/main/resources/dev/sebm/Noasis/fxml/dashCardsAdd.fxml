@@ -33,14 +33,29 @@
          <children>
             <AnchorPane layoutX="35.0" layoutY="21.0" prefHeight="510.0" prefWidth="960.0">
                <children>
-                  <Label layoutX="38.0" layoutY="102.0" prefHeight="18.0" prefWidth="101.0" text="Term" />
-                  <TextArea layoutX="37.0" layoutY="133.0" prefHeight="54.0" prefWidth="886.0" />
-                  <Label layoutX="45.0" layoutY="208.0" prefHeight="18.0" prefWidth="101.0" text="Definition" />
+                  <Label layoutX="45.0" layoutY="102.0" prefHeight="18.0" prefWidth="101.0" text="Term">
+                     <font>
+                        <Font name="Georgia" size="17.0" />
+                     </font></Label>
+                  <TextArea layoutX="42.0" layoutY="135.0" prefHeight="54.0" prefWidth="890.0" />
+                  <Label layoutX="45.0" layoutY="208.0" prefHeight="18.0" prefWidth="101.0" text="Definition">
+                     <font>
+                        <Font name="Georgia" size="17.0" />
+                     </font></Label>
                   <TextArea layoutX="42.0" layoutY="240.0" prefHeight="215.0" prefWidth="890.0" />
-                  <Button layoutX="890.0" layoutY="469.0" mnemonicParsing="false" text="Save" />
-                  <Button layoutX="801.0" layoutY="469.0" mnemonicParsing="false" text="Cancel" />
-                  <Label layoutX="33.0" layoutY="2.0" prefHeight="18.0" prefWidth="101.0" text="Title" />
-                  <TextArea layoutX="32.0" layoutY="33.0" prefHeight="54.0" prefWidth="886.0" />
+                  <Button layoutX="880.0" layoutY="469.0" mnemonicParsing="false" style="-fx-background-color: #50C878;" text="Save">
+                     <font>
+                        <Font name="Georgia" size="15.0" />
+                     </font></Button>
+                  <Button layoutX="767.0" layoutY="469.0" mnemonicParsing="false" style="-fx-background-color: #FF3131;" text="Cancel">
+                     <font>
+                        <Font name="Georgia" size="15.0" />
+                     </font></Button>
+                  <Label layoutX="45.0" layoutY="4.0" prefHeight="18.0" prefWidth="101.0" text="Title">
+                     <font>
+                        <Font name="Georgia" size="17.0" />
+                     </font></Label>
+                  <TextArea layoutX="42.0" layoutY="33.0" prefHeight="54.0" prefWidth="890.0" />
                </children>
             </AnchorPane>
          </children>

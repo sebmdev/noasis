@@ -19,12 +19,12 @@
                   <Font name="Georgia" size="16.0" />
                </font>
             </Label>
-            <Button layoutX="638.0" layoutY="465.0" text="Cancel">
+            <Button layoutX="638.0" layoutY="465.0" style="-fx-background-color: #FF3131;" text="Cancel">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Button>
-            <Button layoutX="734.0" layoutY="465.0" prefHeight="30.0" prefWidth="193.0" text="Generate Study Set">
+            <Button layoutX="734.0" layoutY="465.0" prefHeight="30.0" prefWidth="193.0" style="-fx-background-color: #50C878;" text="Generate Study Set">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
