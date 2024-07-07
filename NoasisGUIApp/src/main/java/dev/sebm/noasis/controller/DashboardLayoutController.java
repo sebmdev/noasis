@@ -42,7 +42,7 @@ import java.util.prefs.Preferences;
 @Component
 public class DashboardLayoutController implements Initializable {
     @FXML private Button btnToggleNav;
-    @FXML private AnchorPane nav, dashHome, dashShared;
+    @FXML private AnchorPane nav, dashHome, dashShared, flashCards;
     @FXML private BorderPane borderPane;
     @FXML private StackPane centerPane;
 
@@ -95,11 +95,14 @@ public class DashboardLayoutController implements Initializable {
             dashHome.toFront();
             dashHome.setVisible(true);
             dashShared.setVisible(false);
+            flashCards.setVisible(false);
         });
+
         btnSharedSets.setOnMouseClicked(e->{
             dashShared.toFront();
             dashHome.setVisible(false);
             dashShared.setVisible(true);
+            flashCards.setVisible(false);
         });
 
         btnLogout.setOnMouseClicked(event -> {
@@ -238,5 +241,12 @@ public class DashboardLayoutController implements Initializable {
                 btnLogout.setAlignment(Pos.BASELINE_CENTER);
             });
         }
+    }
+
+    public void showFlashCards() {
+        flashCards.toFront();
+        dashHome.setVisible(false);
+        dashShared.setVisible(false);
+        flashCards.setVisible(true);
     }
 }

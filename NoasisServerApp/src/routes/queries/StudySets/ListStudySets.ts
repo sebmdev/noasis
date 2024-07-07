@@ -13,7 +13,7 @@ export default async function listStudySets(
 
   const connection = await pool.getConnection()
   const [rows] = await connection.execute(
-    `SELECT * FROM study_sets WHERE created_by = ?;`,
+    `SELECT id, title FROM study_sets WHERE created_by = ?;`,
     [user_id]
   )
 
