@@ -13,12 +13,14 @@ import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.http.HttpEntity;
@@ -42,6 +44,7 @@ import java.util.prefs.Preferences;
 @Component
 public class DashboardLayoutController implements Initializable {
     @FXML private Button btnToggleNav;
+    @FXML private VBox flashCardsAdd;
     @FXML private AnchorPane nav, dashHome, dashShared, flashCards;
     @FXML private BorderPane borderPane;
     @FXML private StackPane centerPane;
@@ -92,17 +95,12 @@ public class DashboardLayoutController implements Initializable {
         });
 
         btnStudySets.setOnMouseClicked(e->{
-            dashHome.toFront();
-            dashHome.setVisible(true);
-            dashShared.setVisible(false);
-            flashCards.setVisible(false);
+            showPage(dashHome);
+
         });
 
         btnSharedSets.setOnMouseClicked(e->{
-            dashShared.toFront();
-            dashHome.setVisible(false);
-            dashShared.setVisible(true);
-            flashCards.setVisible(false);
+            showPage(dashShared);
         });
 
         btnLogout.setOnMouseClicked(event -> {
@@ -243,10 +241,20 @@ public class DashboardLayoutController implements Initializable {
         }
     }
 
-    public void showFlashCards() {
-        flashCards.toFront();
+    private void showPage(Node node) {
         dashHome.setVisible(false);
         dashShared.setVisible(false);
-        flashCards.setVisible(true);
+        flashCards.setVisible(false);
+        flashCardsAdd.setVisible(false);
+        node.toFront();
+        node.setVisible(true);
+    }
+
+    public void showFlashCards() {
+        showPage(flashCards);
+    }
+
+    public void showFlashCardsAdd() {
+        showPage(flashCardsAdd);
     }
 }

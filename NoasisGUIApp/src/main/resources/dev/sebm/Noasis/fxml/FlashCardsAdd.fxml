@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="27.0" layoutY="26.0" prefHeight="546.0" prefWidth="1022.0" style="-fx-background-color: F5F7FA;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="27.199999999999932" AnchorPane.rightAnchor="30.600000000000023" AnchorPane.topAnchor="25.600000000000023">
+      <Label prefHeight="18.0" prefWidth="101.0" text="Term">
+         <font>
+            <Font name="Georgia" size="17.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
+      <TextArea prefHeight="54.0" prefWidth="890.0">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin></TextArea>
+      <Label prefHeight="18.0" prefWidth="101.0" text="Definition">
+         <font>
+            <Font name="Georgia" size="17.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
+      <TextArea prefHeight="215.0" prefWidth="890.0" />
+      <HBox alignment="CENTER_RIGHT" spacing="10.0">
          <children>
-            <Label layoutX="66.0" layoutY="17.0" prefHeight="18.0" prefWidth="101.0" text="Title" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="854.4" AnchorPane.topAnchor="17.0">
-               <font>
-                  <Font name="Georgia" size="17.0" />
-               </font>
-            </Label>
-            <TextArea layoutX="63.0" layoutY="46.0" prefHeight="54.0" prefWidth="890.0" AnchorPane.leftAnchor="63.200000000000045" AnchorPane.rightAnchor="69.0" AnchorPane.topAnchor="46.0" />
-            <Label layoutX="66.0" layoutY="115.0" prefHeight="18.0" prefWidth="101.0" text="Term" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="854.4" AnchorPane.topAnchor="115.0">
-               <font>
-                  <Font name="Georgia" size="17.0" />
-               </font>
-            </Label>
-            <TextArea layoutX="63.0" layoutY="148.0" prefHeight="54.0" prefWidth="890.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="68.79999999999995" AnchorPane.topAnchor="148.0" />
-            <Label layoutX="66.0" layoutY="221.0" prefHeight="18.0" prefWidth="101.0" text="Definition" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="854.4" AnchorPane.topAnchor="221.0">
-               <font>
-                  <Font name="Georgia" size="17.0" />
-               </font>
-            </Label>
-            <TextArea layoutX="63.0" layoutY="253.0" prefHeight="215.0" prefWidth="890.0" AnchorPane.bottomAnchor="78.19999999999999" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="68.79999999999995" AnchorPane.topAnchor="252.8" />
-            <Button layoutX="921.0" layoutY="488.0" mnemonicParsing="false" style="-fx-background-color: #50C878;" text="Save" AnchorPane.bottomAnchor="23.199999999999974" AnchorPane.rightAnchor="46.199999999999974">
+            <Button mnemonicParsing="false" styleClass="success" text="Save">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Button>
-            <Button layoutX="806.0" layoutY="488.0" mnemonicParsing="false" style="-fx-background-color: #FF3131;" text="Cancel" AnchorPane.bottomAnchor="23.199999999999974" AnchorPane.rightAnchor="147.60000000000002">
+            <Button mnemonicParsing="false" styleClass="danger" text="Cancel">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Button>
          </children>
-      </AnchorPane>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </HBox>
    </children>
-</AnchorPane>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

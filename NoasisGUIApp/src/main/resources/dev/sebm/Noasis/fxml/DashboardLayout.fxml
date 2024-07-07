@@ -70,6 +70,7 @@
                <fx:include fx:id="dashHome" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="StudySets.fxml" />
                <fx:include fx:id="dashShared" source="SharedSets.fxml" visible="false" />
                <fx:include fx:id="flashCards" source="FlashCards.fxml" visible="false" />
+               <fx:include fx:id="flashCardsAdd" source="FlashCardsAdd.fxml" visible="false" />
             </StackPane>
          </center>
       </BorderPane>
