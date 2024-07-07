@@ -65,7 +65,7 @@
             </AnchorPane>
          </left>
          <center>
-<!--            <fx:include source="login.fxml" />-->
+<!--            <fx:include source="Login.fxml" />-->
             <StackPane fx:id="centerPane" alignment="TOP_LEFT" minHeight="0.0" minWidth="0.0" BorderPane.alignment="CENTER">
                <fx:include fx:id="dashHome" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="StudySets.fxml" />
                <fx:include fx:id="dashShared" source="SharedSets.fxml" visible="false" />
