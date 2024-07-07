@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.UploadTestController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.GenerateAIController">
    <children>
       <AnchorPane layoutX="16.0" layoutY="10.0" prefHeight="525.0" prefWidth="994.0">
          <children>

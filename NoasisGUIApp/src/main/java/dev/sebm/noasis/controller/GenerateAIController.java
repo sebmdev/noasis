@@ -2,21 +2,19 @@ package dev.sebm.noasis.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import org.springframework.stereotype.Component;
-
 import javafx.scene.control.Label;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
 
-
 @Component
-public class testController {
+public class GenerateAIController {
     @FXML
     private Label statusLabel;
 
@@ -56,7 +54,7 @@ public class testController {
             if (file.getName().endsWith(".pdf")) {
                 loadPdfFile(file);
             } else {
-                statusLabel.setText("Not a PDF file.");
+                statusLabel.setText("Invalid File.");
             }
         }
         event.setDropCompleted(success);
@@ -65,7 +63,7 @@ public class testController {
 
     private void loadPdfFile(File file) {
         // Load and process the PDF file
-        statusLabel.setText("Loaded: " + file.getName());
+        statusLabel.setText(file.getName());
         // Your code to process the PDF goes here
     }
 }

@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane layoutX="3.0" layoutY="96.0" prefHeight="458.0" prefWidth="1020.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="96.0">
@@ -186,12 +185,12 @@
             <Font name="Georgia" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="791.0" layoutY="47.0" mnemonicParsing="false" text="Cancel">
+      <Button layoutX="791.0" layoutY="47.0" mnemonicParsing="false" style="-fx-background-color: #FF3131;" text="Cancel">
          <font>
             <Font name="Georgia" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="886.0" layoutY="47.0" mnemonicParsing="false" text="Submit">
+      <Button layoutX="886.0" layoutY="47.0" mnemonicParsing="false" style="-fx-background-color: #50C878;" text="Submit">
          <font>
             <Font name="Georgia" size="15.0" />
          </font>
