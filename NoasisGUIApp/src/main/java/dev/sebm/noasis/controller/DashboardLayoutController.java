@@ -74,16 +74,7 @@ public class DashboardLayoutController implements Initializable {
         }
 
         navWidth = (int) nav.getPrefWidth();
-        dashHome.prefWidthProperty().bind(centerPane.widthProperty());
-        dashHome.prefHeightProperty().bind(centerPane.heightProperty());
-        dashShared.prefWidthProperty().bind(centerPane.widthProperty());
-        dashShared.prefHeightProperty().bind(centerPane.heightProperty());
-        generateAI.prefWidthProperty().bind(centerPane.widthProperty());
-        generateAI.prefHeightProperty().bind(centerPane.heightProperty());
-        flashCards.prefWidthProperty().bind(centerPane.widthProperty());
-        flashCards.prefHeightProperty().bind(centerPane.heightProperty());
-        flashCardsAdd.prefWidthProperty().bind(centerPane.widthProperty());
-        flashCardsAdd.prefHeightProperty().bind(centerPane.heightProperty());
+        initializeContentSize();
 
 
         btnToggleNav.setOnMouseClicked(e -> {
@@ -96,15 +87,18 @@ public class DashboardLayoutController implements Initializable {
         });
 
         btnStudySets.setOnMouseClicked(e->{
+            initializeContentSize();
             showPage(dashHome);
 
         });
 
         btnSharedSets.setOnMouseClicked(e->{
+            initializeContentSize();
             showPage(dashShared);
         });
 
         btnGenerateWithAI.setOnMouseClicked(e ->{
+            initializeContentSize();
             showPage(generateAI);
         });
 
@@ -254,6 +248,18 @@ public class DashboardLayoutController implements Initializable {
         generateAI.setVisible(false);
         node.toFront();
         node.setVisible(true);
+    }
+    private void initializeContentSize(){
+        dashHome.prefWidthProperty().bind(centerPane.widthProperty());
+        dashHome.prefHeightProperty().bind(centerPane.heightProperty());
+        dashShared.prefWidthProperty().bind(centerPane.widthProperty());
+        dashShared.prefHeightProperty().bind(centerPane.heightProperty());
+        generateAI.prefWidthProperty().bind(centerPane.widthProperty());
+        generateAI.prefHeightProperty().bind(centerPane.heightProperty());
+        flashCards.prefWidthProperty().bind(centerPane.widthProperty());
+        flashCards.prefHeightProperty().bind(centerPane.heightProperty());
+        flashCardsAdd.prefWidthProperty().bind(centerPane.widthProperty());
+        flashCardsAdd.prefHeightProperty().bind(centerPane.heightProperty());
     }
 
     public void showFlashCards() {
