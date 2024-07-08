@@ -2,18 +2,29 @@ package dev.sebm.noasis.controller;
 
 import atlantafx.base.controls.Card;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sebm.noasis.guicomponent.FlipCard;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.models.FlashCard;
+import javafx.animation.AnimationTimer;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.chart.Axis;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
@@ -39,12 +50,13 @@ import java.util.prefs.Preferences;
 public class FlashCardsController implements Initializable {
     private final FlashCardAddEditController flashCardAddEditController;
     private final DashboardLayoutController dashboardLayoutController;
-    @FXML private Pane flashcardList;
+    @FXML private Pane root, flashcardList;
     @FXML private Button btnAddCard, btnBack, btnMockExam;
     @FXML private ProgressIndicator progressIndicator;
     @FXML private AnchorPane content;
 
     private final CookieStore httpCookieStore = new BasicCookieStore();
+    private FlipCard flipCard;
 
     public FlashCardsController(
             Preferences preferences,
@@ -63,9 +75,35 @@ public class FlashCardsController implements Initializable {
     }
 
     public void loadFlashCards(String studySetId) {
-        flashcardList.getChildren().clear();
+//        flashcardList.getChildren().clear();
         progressIndicator.setVisible(true);
         content.setDisable(true);
+        // Create front and back nodes for the flip card (you can use any Node type)
+
+        Card front = new Card();
+        front.minHeight(300);
+        front.minWidth(200);
+        front.setBody(new Text("Front"));
+
+        Card back = new Card();
+        back.minHeight(300);
+        back.minWidth(200);
+        back.setBody(new Text("Back"));
+
+        // Create the flip card
+        flipCard = new FlipCard(front, back);
+        flipCard.setRotationAxis(Rotate.Y_AXIS);
+        flipCard.setRotate(60);
+        // Set up a button to trigger the flip animation
+        Button flipButton = new Button("Flip");
+        flipButton.setOnAction(e -> flipCard());
+
+        HBox demoFlipContainer = new HBox();
+        Region r = new Region();
+        HBox.setHgrow(r, Priority.ALWAYS);
+
+        demoFlipContainer.getChildren().addAll(r, flipCard, flipButton);
+        flashcardList.getChildren().add(demoFlipContainer);
         try {
             final HttpGet httpGet = new HttpGet("http://localhost:3000/study-sets/" + studySetId);
             System.out.println("Loading study set "+ studySetId);
@@ -98,6 +136,8 @@ public class FlashCardsController implements Initializable {
                             objectMapper.getTypeFactory().constructCollectionType(List.class, FlashCard.class));
 
                     Platform.runLater(() -> {
+
+
                         flashCards.forEach(flashCard -> {
                             Card card = new Card();
                             card.setMaxWidth(600);
@@ -170,5 +210,57 @@ public class FlashCardsController implements Initializable {
         btnBack.setOnMouseClicked(_ -> {
             dashboardLayoutController.showStudySets();
         });
+
+//        root.sceneProperty().addListener((observable, oldScene, newScene) -> {
+//            if (newScene != null) {
+//            }
+//        });
+    }
+
+    private void flipCard() {
+        // Set up the flip animation
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), flipCard);
+
+        if (flipCard.isFrontShown()) {
+            AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    // Print the current angle of the rectangle
+                    System.out.println("Current angle: " + flipCard.rotateProperty().doubleValue());
+                    if (flipCard.rotateProperty().doubleValue() >= 90) {
+                        flipCard.showBack();
+                        flipCard.setScaleX(-1);
+                    }
+                }
+            };
+            rotateTransition.setAxis(Rotate.Y_AXIS);
+            rotateTransition.setFromAngle(0);
+            rotateTransition.setToAngle(180);
+            rotateTransition.setOnFinished(e -> {
+                timer.stop();
+            });
+            rotateTransition.play();
+            timer.start();
+        } else {
+            AnimationTimer timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    // Print the current angle of the rectangle
+                    System.out.println("Current angle: " + flipCard.rotateProperty().doubleValue());
+                    if (flipCard.rotateProperty().doubleValue() <= 90) {
+                        flipCard.showFront();
+                        flipCard.setScaleX(1);
+                    }
+                }
+            };
+            rotateTransition.setAxis(Rotate.Y_AXIS);
+            rotateTransition.setFromAngle(180);
+            rotateTransition.setToAngle(0);
+            rotateTransition.setOnFinished(e -> {
+                timer.stop();
+            });
+            rotateTransition.play();
+            timer.start();
+        }
     }
 }
