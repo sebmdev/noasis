@@ -8,7 +8,7 @@ export default async function CreateFlashCard(req: Request, res: Response) {
   try {
     const studySetId = req.params.id;
     const term = req.body.term || ''
-    const definition = req.body.term || ''
+    const definition = req.body.definition || ''
 
     if (!req.session.user) {
       return res.sendStatus(401)

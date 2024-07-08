@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
@@ -61,11 +61,11 @@
                      <children>
                         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutY="88.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <TilePane fx:id="tilePane" hgap="50.0" prefColumns="1" prefRows="20" tileAlignment="TOP_LEFT" vgap="50.0">
+                              <VBox fx:id="flashcardList" alignment="CENTER" spacing="20.0">
                                  <padding>
-                                    <Insets left="30.0" right="30.0" top="30.0" />
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </padding>
-                              </TilePane>
+                              </VBox>
                            </content>
                         </ScrollPane>
                      </children>

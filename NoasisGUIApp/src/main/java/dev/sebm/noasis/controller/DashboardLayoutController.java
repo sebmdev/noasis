@@ -3,6 +3,7 @@ package dev.sebm.noasis.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.LogoutSuccessResponse;
+import dev.sebm.noasis.jsonresponses.models.FlashCard;
 import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -31,6 +32,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -51,11 +53,15 @@ public class DashboardLayoutController implements Initializable {
     private final CookieStore httpCookieStore = new BasicCookieStore();
     private final SpringFXMLLoader springFXMLLoader;
     private final Preferences preferences;
+    private final FlashCardAddEditController flashCardAddEditController;
 
-
-    public DashboardLayoutController(Preferences preferences, SpringFXMLLoader springFXMLLoader) {
+    public DashboardLayoutController(
+            Preferences preferences,
+            SpringFXMLLoader springFXMLLoader,
+            FlashCardAddEditController flashCardAddEditController) {
         this.springFXMLLoader = springFXMLLoader;
         this.preferences = preferences.node("session");
+        this.flashCardAddEditController = flashCardAddEditController;
     }
 
     private boolean navOpened = true;
@@ -271,6 +277,12 @@ public class DashboardLayoutController implements Initializable {
 
     public void showFlashCardsAdd() {
         showPage(flashCardsAdd);
+        flashCardAddEditController.setSaveActionForNewFlashcard();
+    }
+
+    public void showFlashCardsEdit(FlashCard flashCard) {
+        showPage(flashCardsAdd);
+        flashCardAddEditController.setSaveActionForEditFlashcard(flashCard);
     }
 
     public void showStudySets() {

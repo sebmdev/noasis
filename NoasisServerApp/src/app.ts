@@ -9,8 +9,10 @@ import CheckSession from './routes/CheckSession'
 import Logout from './routes/Logout'
 import CreateStudySet from './routes/CreateStudySet'
 import ListStudySets from './routes/ListStudySets'
-import ListFlashCards from './routes/Flashcards'
+import ListFlashCards from './routes/ListFlashcards'
 import CreateFlashCard from './routes/CreateFlashCard'
+import FlashcardDetail from './routes/FlashcardDetail'
+import EditFlashCard from './routes/EditFlashCard'
 const MySQLStore = require('express-mysql-session')(session)
 
 declare module 'express-session' {
@@ -84,6 +86,10 @@ app.get('/study-sets', async (req: Request, res: Response) => ListStudySets(req,
 app.get('/study-sets/:id', async (req: Request, res: Response) => ListFlashCards(req, res))
 
 app.post('/study-sets/:id', async (req: Request, res: Response) => CreateFlashCard(req, res))
+
+app.get('/flashcard/:id', async (req: Request, res: Response) => FlashcardDetail(req, res))
+
+app.put('/flashcard/:id', async (req: Request, res: Response) => EditFlashCard(req, res))
 
 app.get('/test', async (req: Request, res: Response) => {
   console.log(req.session.id)

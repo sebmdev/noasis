@@ -1,10 +1,7 @@
 import { Request, Response } from 'express'
-import listStudySets from './queries/StudySets/ListStudySets'
 import listFlashCards from './queries/StudySets/ListFlashCards';
 
 export default async function ListFlashCards(req: Request, res: Response) {
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-    await delay(2000)
   try {
     if (!req.session.user) {
       return res.sendStatus(401)

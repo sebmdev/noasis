@@ -1,5 +1,6 @@
 package dev.sebm.noasis.controller;
 
+import atlantafx.base.controls.Card;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.models.FlashCard;
@@ -11,9 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
@@ -37,16 +37,20 @@ import java.util.prefs.Preferences;
 
 @Component
 public class FlashCardsController implements Initializable {
-    @FXML private TilePane tilePane;
+    private final FlashCardAddEditController flashCardAddEditController;
+    private final DashboardLayoutController dashboardLayoutController;
+    @FXML private Pane flashcardList;
     @FXML private Button btnAddCard, btnBack, btnMockExam;
     @FXML private ProgressIndicator progressIndicator;
     @FXML private AnchorPane content;
 
     private final CookieStore httpCookieStore = new BasicCookieStore();
-    private final ApplicationContext applicationContext;
 
-    public FlashCardsController(Preferences preferences, ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+    public FlashCardsController(
+            Preferences preferences,
+            ApplicationContext applicationContext,
+            FlashCardAddEditController flashCardAddEditController,
+            DashboardLayoutController dashboardLayoutController) {
         String sessionCookieValue = preferences.node("session").get("connect.sid", "none");
         if (sessionCookieValue != null) {
             BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
@@ -54,10 +58,12 @@ public class FlashCardsController implements Initializable {
             sessionCookie.setDomain("localhost");
             httpCookieStore.addCookie(sessionCookie);
         }
+        this.flashCardAddEditController = flashCardAddEditController;
+        this.dashboardLayoutController = dashboardLayoutController;
     }
 
     public void loadFlashCards(String studySetId) {
-        tilePane.getChildren().clear();
+        flashcardList.getChildren().clear();
         progressIndicator.setVisible(true);
         content.setDisable(true);
         try {
@@ -93,14 +99,31 @@ public class FlashCardsController implements Initializable {
 
                     Platform.runLater(() -> {
                         flashCards.forEach(flashCard -> {
-                            TextArea textArea1 = new TextArea();
-                            textArea1.setEditable(false);
-                            textArea1.setPrefHeight(100.0);
-                            textArea1.setPrefWidth(200.0);
-                            textArea1.setWrapText(true);
-                            textArea1.setText(flashCard.getTerm());
+                            Card card = new Card();
+                            card.setMaxWidth(600);
+                            card.setPrefHeight(150);
+                            HBox headerContent = new HBox();
+                            headerContent.getChildren().add(new Text(flashCard.getTerm()));
 
-                            // Create the second TextArea and wrap it in an AnchorPane
+                            Region region = new Region();
+
+                            HBox.setHgrow(region, Priority.ALWAYS);
+
+                            Button edit = new Button();
+                            edit.getStyleClass().add("flat");
+                            edit.setGraphic(new FontIcon("fa-pencil-square-o"));
+
+                            edit.setOnMouseClicked(_ -> {
+                                System.out.println("Editing " + flashCard.getId());
+                                dashboardLayoutController.showFlashCardsEdit(flashCard);
+                            });
+
+                            Button trash = new Button();
+                            trash.getStyleClass().addAll("flat", "danger");
+                            trash.setGraphic(new FontIcon("fa-trash-o"));
+                            headerContent.getChildren().addAll(region, edit, trash);
+                            card.setHeader(headerContent);
+
                             TextArea textArea2 = new TextArea("\n");
                             textArea2.setEditable(false);
                             textArea2.setMaxHeight(Double.MAX_VALUE);
@@ -108,40 +131,8 @@ public class FlashCardsController implements Initializable {
                             textArea2.setWrapText(true);
                             textArea2.setText(flashCard.getDefinition());
 
-                            AnchorPane anchorPane = new AnchorPane(textArea2);
-                            AnchorPane.setBottomAnchor(textArea2, 0.0);
-                            AnchorPane.setLeftAnchor(textArea2, 0.0);
-                            AnchorPane.setRightAnchor(textArea2, 0.0);
-                            AnchorPane.setTopAnchor(textArea2, 0.0);
-
-                            // Create the Button with a FontIcon
-                            Button edit = new Button();
-                            edit.getStyleClass().add("flat");
-                            edit.setGraphic(new FontIcon("fa-pencil-square-o"));
-
-                            Button trash = new Button();
-                            trash.getStyleClass().addAll("flat", "danger");
-                            trash.setGraphic(new FontIcon("fa-trash-o"));
-
-                            // Set margin for the Button
-                            HBox.setMargin(edit, new Insets(0, 0, 0, 10));
-                            HBox.setMargin(trash, new Insets(0, 0, 0, 10));
-
-                            // Create the ScrollPane and add the AnchorPane as its content
-                            ScrollPane scrollPane = new ScrollPane(anchorPane);
-                            scrollPane.setFitToHeight(true);
-                            scrollPane.setFitToWidth(true);
-                            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-                            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-                            scrollPane.setPrefHeight(100);
-                            scrollPane.setPrefWidth(800);
-
-                            // Create the HBox and add the TextArea and ScrollPane
-                            HBox hbox = new HBox();
-                            hbox.setPrefHeight(100.0);
-                            hbox.getChildren().addAll(textArea1, scrollPane, edit, trash);
-
-                            tilePane.getChildren().add(hbox);
+                            card.setBody(textArea2);
+                            flashcardList.getChildren().add(card);
                         });
                         progressIndicator.setVisible(false);
                         content.setDisable(false);
@@ -165,22 +156,19 @@ public class FlashCardsController implements Initializable {
             e.printStackTrace();
         }
 
-        btnBack.setOnMouseClicked(_ -> {
-            DashboardLayoutController dashboardLayoutController = applicationContext.getBean(DashboardLayoutController.class);
-            dashboardLayoutController.showStudySets();
+        btnAddCard.setOnMouseClicked(_ -> {
+            dashboardLayoutController.showFlashCardsAdd();
+            flashCardAddEditController.setStudySetId(studySetId);
         });
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         btnMockExam.setOnMouseClicked(e -> {
-            DashboardLayoutController dashboardLayoutController = applicationContext.getBean(DashboardLayoutController.class);
             dashboardLayoutController.showMockExam();
         });
-        btnAddCard.setOnMouseClicked(_ -> {
-            DashboardLayoutController dashboardLayoutController = applicationContext.getBean(DashboardLayoutController.class);
-            dashboardLayoutController.showFlashCardsAdd();
+        btnBack.setOnMouseClicked(_ -> {
+            dashboardLayoutController.showStudySets();
         });
     }
 }

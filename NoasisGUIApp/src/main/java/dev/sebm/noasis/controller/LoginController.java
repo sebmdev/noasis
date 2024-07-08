@@ -76,8 +76,6 @@ public class LoginController {
 
             tfEmail.pseudoClassStateChanged(Styles.STATE_DANGER, false);
             tfPassword.pseudoClassStateChanged(Styles.STATE_DANGER, false);
-//            gridPane.setDisable(true);
-//            progressIndicator.setVisible(true);
 
             try {
                 final HttpPost httpPost = new HttpPost("http://localhost:3000/login");
