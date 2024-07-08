@@ -41,7 +41,7 @@ import java.util.prefs.Preferences;
 @Component
 public class DashboardLayoutController implements Initializable {
     @FXML private Button btnToggleNav;
-    @FXML private Pane nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd;
+    @FXML private Pane nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd,generateAI;
 
     @FXML private Button btnStudySets;
     @FXML private Button btnSharedSets;
@@ -78,6 +78,13 @@ public class DashboardLayoutController implements Initializable {
         dashHome.prefHeightProperty().bind(centerPane.heightProperty());
         dashShared.prefWidthProperty().bind(centerPane.widthProperty());
         dashShared.prefHeightProperty().bind(centerPane.heightProperty());
+        generateAI.prefWidthProperty().bind(centerPane.widthProperty());
+        generateAI.prefHeightProperty().bind(centerPane.heightProperty());
+        flashCards.prefWidthProperty().bind(centerPane.widthProperty());
+        flashCards.prefHeightProperty().bind(centerPane.heightProperty());
+        flashCardsAdd.prefWidthProperty().bind(centerPane.widthProperty());
+        flashCardsAdd.prefHeightProperty().bind(centerPane.heightProperty());
+
 
         btnToggleNav.setOnMouseClicked(e -> {
             TranslateTransition slide = new TranslateTransition();
@@ -95,6 +102,10 @@ public class DashboardLayoutController implements Initializable {
 
         btnSharedSets.setOnMouseClicked(e->{
             showPage(dashShared);
+        });
+
+        btnGenerateWithAI.setOnMouseClicked(e ->{
+            showPage(generateAI);
         });
 
         btnLogout.setOnMouseClicked(event -> {
@@ -240,6 +251,7 @@ public class DashboardLayoutController implements Initializable {
         dashShared.setVisible(false);
         flashCards.setVisible(false);
         flashCardsAdd.setVisible(false);
+        generateAI.setVisible(false);
         node.toFront();
         node.setVisible(true);
     }

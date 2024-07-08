@@ -71,6 +71,7 @@
                <fx:include fx:id="dashShared" source="SharedSets.fxml" visible="false" />
                <fx:include fx:id="flashCards" source="FlashCards.fxml" visible="false" />
                <fx:include fx:id="flashCardsAdd" source="FlashCardAddEdit.fxml" visible="false"/>
+               <fx:include fx:id="generateAI" source="GenerateAI.fxml" visible="false"/>
             </StackPane>
          </center>
       </BorderPane>

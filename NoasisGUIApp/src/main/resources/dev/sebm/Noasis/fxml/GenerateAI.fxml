@@ -7,24 +7,24 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="1020.0" style="-fx-background-color: F5F7FA;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.GenerateAIController">
    <children>
-      <AnchorPane layoutX="16.0" layoutY="10.0" prefHeight="525.0" prefWidth="994.0">
+      <AnchorPane layoutX="16.0" layoutY="10.0" prefHeight="525.0" prefWidth="994.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="uploadButton" alignment="CENTER" layoutX="134.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleUploadButtonAction" prefHeight="375.0" prefWidth="708.0" text="Drop PDF here or click to browse" wrapText="true" AnchorPane.bottomAnchor="110.39999999999998" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="152.39999999999998" AnchorPane.topAnchor="40.0">
                <font>
                   <Font name="Georgia" size="20.0" />
                </font>
             </Button>
-            <Label fx:id="statusLabel" alignment="CENTER" layoutX="2.0" layoutY="432.0" text="No File Uploaded" AnchorPane.bottomAnchor="74.39999999999998" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-1.2000000000000455" AnchorPane.topAnchor="432.0">
+            <Label fx:id="statusLabel" alignment="CENTER" layoutX="2.0" layoutY="432.0" text="No File Uploaded" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <font>
                   <Font name="Georgia" size="16.0" />
                </font>
             </Label>
-            <Button layoutX="638.0" layoutY="465.0" style="-fx-background-color: #FF3131;" text="Cancel">
+            <Button fx:id="btnCancel" layoutX="638.0" layoutY="465.0" style="-fx-background-color: #FF3131;" text="Cancel" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="225.0">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Button>
-            <Button layoutX="734.0" layoutY="465.0" prefHeight="30.0" prefWidth="193.0" style="-fx-background-color: #50C878;" text="Generate Study Set">
+            <Button layoutX="734.0" layoutY="465.0" prefHeight="30.0" prefWidth="193.0" style="-fx-background-color: #50C878;" text="Generate Study Set" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
