@@ -75,7 +75,7 @@ public class FlashCardsController implements Initializable {
     }
 
     public void loadFlashCards(String studySetId) {
-//        flashcardList.getChildren().clear();
+        flashcardList.getChildren().clear();
         progressIndicator.setVisible(true);
         content.setDisable(true);
         // Create front and back nodes for the flip card (you can use any Node type)
