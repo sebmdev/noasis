@@ -185,12 +185,12 @@
             <Font name="Georgia" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="791.0" layoutY="47.0" mnemonicParsing="false" style="-fx-background-color: #FF3131;" text="Cancel">
+      <Button layoutX="886.0" layoutY="47.0" mnemonicParsing="false" text="Cancel">
          <font>
             <Font name="Georgia" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="886.0" layoutY="47.0" mnemonicParsing="false" style="-fx-background-color: #50C878;" text="Submit">
+      <Button layoutX="791.0" layoutY="47.0" mnemonicParsing="false" styleClass="accent" text="Submit">
          <font>
             <Font name="Georgia" size="15.0" />
          </font>
