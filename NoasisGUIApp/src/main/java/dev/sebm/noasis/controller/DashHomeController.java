@@ -9,13 +9,9 @@ import dev.sebm.noasis.util.SpringFXMLLoader;
 import jakarta.annotation.Nullable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -44,19 +40,21 @@ import java.util.prefs.Preferences;
 
 @Component
 public class DashHomeController implements Initializable {
+    private final FlashCardsController flashCardsController;
+    private final FlashCardAddEditController flashCardAddEditController;
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
     @FXML private Button btnCreateSet;
 
-    private final SpringFXMLLoader springFXMLLoader;
     private final Preferences preferences;
     private final CookieStore httpCookieStore = new BasicCookieStore();
     private final ApplicationContext applicationContext;
 
-    public DashHomeController(Preferences preferences, SpringFXMLLoader springFXMLLoader, ApplicationContext applicationContext) {
-        this.springFXMLLoader = springFXMLLoader;
+    public DashHomeController(Preferences preferences, SpringFXMLLoader springFXMLLoader, ApplicationContext applicationContext, FlashCardsController flashCardsController, FlashCardAddEditController flashCardAddEditController) {
         this.preferences = preferences.node("session");
         this.applicationContext = applicationContext;
+        this.flashCardsController = flashCardsController;
+        this.flashCardAddEditController = flashCardAddEditController;
     }
 
     @Override
@@ -127,6 +125,15 @@ public class DashHomeController implements Initializable {
                             );
 
                             card.setContextMenu(ctxMenu);
+
+                            card.setOnMouseClicked(_ -> {
+                                flashCardsController.loadFlashCards(studySet.getId());
+                                FlashCardAddEditController flashCardAddEditController = applicationContext.getBean(FlashCardAddEditController.class);
+                                flashCardAddEditController.setStudySetId(studySet.getId());
+                                DashboardLayoutController dashboardLayoutController = applicationContext.getBean(DashboardLayoutController.class);
+                                dashboardLayoutController.showFlashCards();
+                            });
+
                             flowPane.getChildren().add(card);
                         });
                     });

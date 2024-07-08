@@ -17,10 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.http.HttpEntity;
@@ -44,10 +41,7 @@ import java.util.prefs.Preferences;
 @Component
 public class DashboardLayoutController implements Initializable {
     @FXML private Button btnToggleNav;
-    @FXML private VBox flashCardsAdd;
-    @FXML private AnchorPane nav, dashHome, dashShared, flashCards;
-    @FXML private BorderPane borderPane;
-    @FXML private StackPane centerPane;
+    @FXML private Pane nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd;
 
     @FXML private Button btnStudySets;
     @FXML private Button btnSharedSets;
@@ -256,5 +250,9 @@ public class DashboardLayoutController implements Initializable {
 
     public void showFlashCardsAdd() {
         showPage(flashCardsAdd);
+    }
+
+    public void showStudySets() {
+        showPage(dashHome);
     }
 }
