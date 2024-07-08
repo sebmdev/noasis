@@ -72,6 +72,7 @@
                <fx:include fx:id="flashCards" source="FlashCards.fxml" visible="false" />
                <fx:include fx:id="flashCardsAdd" source="FlashCardAddEdit.fxml" visible="false"/>
                <fx:include fx:id="generateAI" source="GenerateAI.fxml" visible="false"/>
+               <fx:include fx:id="mockExam" source="MockExam.fxml" visible="false"/>
             </StackPane>
          </center>
       </BorderPane>

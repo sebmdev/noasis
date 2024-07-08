@@ -38,7 +38,7 @@ import java.util.prefs.Preferences;
 @Component
 public class FlashCardsController implements Initializable {
     @FXML private TilePane tilePane;
-    @FXML private Button btnAddCard, btnBack;
+    @FXML private Button btnAddCard, btnBack, btnMockExam;
     @FXML private ProgressIndicator progressIndicator;
     @FXML private AnchorPane content;
 
@@ -173,6 +173,11 @@ public class FlashCardsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        btnMockExam.setOnMouseClicked(e -> {
+            DashboardLayoutController dashboardLayoutController = applicationContext.getBean(DashboardLayoutController.class);
+            dashboardLayoutController.showMockExam();
+        });
         btnAddCard.setOnMouseClicked(_ -> {
             DashboardLayoutController dashboardLayoutController = applicationContext.getBean(DashboardLayoutController.class);
             dashboardLayoutController.showFlashCardsAdd();

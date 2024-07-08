@@ -40,7 +40,7 @@
                                     <FontIcon iconLiteral="fa-share" />
                                  </graphic>
                               </Button>
-                              <Button prefHeight="29.0" prefWidth="135.0" text="Take mock quiz">
+                              <Button fx:id="btnMockExam" prefHeight="29.0" prefWidth="135.0" text="Take mock quiz">
                                  <font>
                                     <Font name="Georgia" size="15.0" />
                                  </font>

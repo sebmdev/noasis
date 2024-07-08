@@ -41,7 +41,7 @@ import java.util.prefs.Preferences;
 @Component
 public class DashboardLayoutController implements Initializable {
     @FXML private Button btnToggleNav;
-    @FXML private Pane nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd,generateAI;
+    @FXML private Pane nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd,generateAI, mockExam;
 
     @FXML private Button btnStudySets;
     @FXML private Button btnSharedSets;
@@ -246,6 +246,7 @@ public class DashboardLayoutController implements Initializable {
         flashCards.setVisible(false);
         flashCardsAdd.setVisible(false);
         generateAI.setVisible(false);
+        mockExam.setVisible(false);
         node.toFront();
         node.setVisible(true);
     }
@@ -260,6 +261,8 @@ public class DashboardLayoutController implements Initializable {
         flashCards.prefHeightProperty().bind(centerPane.heightProperty());
         flashCardsAdd.prefWidthProperty().bind(centerPane.widthProperty());
         flashCardsAdd.prefHeightProperty().bind(centerPane.heightProperty());
+        mockExam.prefWidthProperty().bind(centerPane.widthProperty());
+        mockExam.prefHeightProperty().bind(centerPane.heightProperty());
     }
 
     public void showFlashCards() {
@@ -272,5 +275,9 @@ public class DashboardLayoutController implements Initializable {
 
     public void showStudySets() {
         showPage(dashHome);
+    }
+
+    public void showMockExam(){
+        showPage(mockExam);
     }
 }

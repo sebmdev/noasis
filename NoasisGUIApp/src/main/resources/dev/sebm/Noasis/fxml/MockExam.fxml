@@ -13,16 +13,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="554.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane layoutX="3.0" layoutY="96.0" prefHeight="458.0" prefWidth="1020.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="96.0">
+      <StackPane layoutX="3.0" prefHeight="554.0" prefWidth="1020.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="96.0">
          <children>
-            <ScrollPane hbarPolicy="NEVER" pannable="true" prefHeight="452.0" prefWidth="1018.0" vbarPolicy="ALWAYS">
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="452.0" prefWidth="1018.0" vbarPolicy="ALWAYS">
                <content>
-                  <TilePane hgap="50.0" orientation="VERTICAL" prefColumns="1" prefHeight="2769.0" prefRows="20" prefWidth="1002.0" tileAlignment="TOP_LEFT" vgap="50.0">
+                  <TilePane alignment="TOP_CENTER" hgap="50.0" orientation="VERTICAL" prefColumns="1" prefHeight="2769.0" prefRows="20" prefWidth="1002.0" tileAlignment="TOP_CENTER" vgap="50.0">
                      <padding>
                         <Insets left="30.0" right="30.0" />
                      </padding>
                      <children>
-                        <HBox alignment="TOP_CENTER">
+                        <HBox>
                            <children>
                               <AnchorPane prefHeight="208.0" prefWidth="787.0" style="-fx-border-color: black;">
                                  <children>
@@ -175,22 +175,22 @@
             </ScrollPane>
          </children>
       </StackPane>
-      <Label layoutX="392.0" layoutY="15.0" text="placeholder for title" textFill="#343c6a" AnchorPane.leftAnchor="392.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+      <Label alignment="CENTER" layoutX="392.0" layoutY="15.0" text="placeholder for title" textFill="#343c6a" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="Georgia" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="23.0" layoutY="47.0" prefHeight="26.0" prefWidth="324.0" text="placeholder for exam type">
+      <Label layoutX="23.0" layoutY="47.0" prefHeight="26.0" prefWidth="324.0" text="placeholder for exam type" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="47.0">
          <font>
             <Font name="Georgia" size="23.0" />
          </font>
       </Label>
-      <Button layoutX="886.0" layoutY="47.0" mnemonicParsing="false" text="Cancel">
+      <Button layoutX="886.0" layoutY="47.0" mnemonicParsing="false" text="Cancel" AnchorPane.rightAnchor="65.2" AnchorPane.topAnchor="47.0">
          <font>
             <Font name="Georgia" size="15.0" />
          </font>
       </Button>
-      <Button layoutX="791.0" layoutY="47.0" mnemonicParsing="false" styleClass="accent" text="Submit">
+      <Button layoutX="791.0" layoutY="47.0" mnemonicParsing="false" styleClass="accent" text="Submit" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="47.0">
          <font>
             <Font name="Georgia" size="15.0" />
          </font>
