@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.CreateFlashcardSuccessResponse;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.models.StudySet;
-import dev.sebm.noasis.util.SpringFXMLLoader;
 import jakarta.annotation.Nullable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,8 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
@@ -69,7 +66,7 @@ public class DashHomeController implements Initializable {
         loadStudySets();
 
         btnCreateSet.setOnMouseClicked(e -> {
-            String title = dashboardLayoutController.showTextDialog("New study set", "Title: ", null);
+            String title = dashboardLayoutController.showTextInputDialog("New study set", "Title: ", null);
             System.out.println(title);
             if (title == null) return;
             try {
@@ -206,7 +203,7 @@ public class DashHomeController implements Initializable {
                            );
 
                            editItem.setOnAction(_ -> {
-                               String newTitle = dashboardLayoutController.showTextDialog("Edit title", "Title", studySet.getTitle());
+                               String newTitle = dashboardLayoutController.showTextInputDialog("Edit title", "Title", studySet.getTitle());
                                if (newTitle == null) return;
                                try {
                                    final HttpPut httpPut = new HttpPut("http://localhost:3000/study-sets/" + studySet.getId());

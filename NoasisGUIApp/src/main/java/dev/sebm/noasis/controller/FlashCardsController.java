@@ -55,7 +55,6 @@ public class FlashCardsController implements Initializable {
     private final Preferences preferences;
     public FlashCardsController(
             Preferences preferences,
-            ApplicationContext applicationContext,
             FlashCardAddEditController flashCardAddEditController,
             DashboardLayoutController dashboardLayoutController) {
         this.flashCardAddEditController = flashCardAddEditController;
@@ -113,6 +112,10 @@ public class FlashCardsController implements Initializable {
 
                     Platform.runLater(() -> {
                         btnMockExam.setOnMouseClicked(e -> {
+                            if (flashCards.size() < 4) {
+                                dashboardLayoutController.showWarningDialog("Warning", "Set should have at least 4 flashcards.");
+                                return;
+                            }
                             dashboardLayoutController.showMockExam(flashCards);
                             dashboardLayoutController.disableNav();
                         });

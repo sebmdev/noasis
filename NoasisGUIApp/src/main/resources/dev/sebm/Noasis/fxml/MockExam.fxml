@@ -12,12 +12,12 @@
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="50.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="btnSubmit" mnemonicParsing="false" styleClass="accent" text="Submit">
+            <Button fx:id="btnSubmitContinue" mnemonicParsing="false" styleClass="accent" text="Submit">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel">
+            <Button fx:id="btnCancelRetry" mnemonicParsing="false" text="Cancel">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>

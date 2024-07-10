@@ -67,8 +67,8 @@ public class FlashCardAddEditController implements Initializable {
             }
             String term = taTerm.getText();
             String definition = taDefinition.getText();
-            String escapedTerm = term.replace("\n", "\\n").replace("\r", "\\r");
-            String escapedDefinition = definition.replace("\n", "\\n").replace("\r", "\\r");
+            String escapedTerm = term.replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+            String escapedDefinition = definition.replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
             System.out.println("Edited flashcard");
 
             content.setDisable(true);
@@ -153,6 +153,9 @@ public class FlashCardAddEditController implements Initializable {
             }
             String term = taTerm.getText();
             String definition = taDefinition.getText();
+            String escapedTerm = term.replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+            String escapedDefinition = definition.replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t");
+
 
             content.setDisable(true);
             progressIndicator.setVisible(true);
@@ -163,8 +166,8 @@ public class FlashCardAddEditController implements Initializable {
                 httpPost.setHeader("Accept", "application/json");
                 httpPost.setHeader("Content-type", "application/json");
                 String json = "{\r\n" +
-                        String.format("  \"term\": \"%s\",\r\n", term) +
-                        String.format("  \"definition\": \"%s\"\r\n", definition) +
+                        String.format("  \"term\": \"%s\",\r\n", escapedTerm) +
+                        String.format("  \"definition\": \"%s\"\r\n", escapedDefinition) +
                         "}";
                 System.out.println(json);
                 StringEntity stringEntity = new StringEntity(json);

@@ -1,6 +1,7 @@
 package dev.sebm.noasis.controller;
 
 import atlantafx.base.controls.ModalPane;
+import atlantafx.base.theme.PrimerLight;
 import atlantafx.base.theme.Styles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
@@ -20,6 +21,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -36,8 +39,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -87,7 +92,21 @@ public class DashboardLayoutController implements Initializable {
         return result.isPresent() && result.get() == yesBtn;
     }
 
-    public String showTextDialog(String title, String content, @Nullable String defaultText) {
+    public void showWarningDialog(String title, String content) {
+        var alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.setHeaderText(null);
+        ButtonType okay = new ButtonType("Okay", ButtonBar.ButtonData.OK_DONE);
+
+        alert.getButtonTypes().setAll(okay);
+        alert.initOwner(root.getScene().getWindow());
+
+        alert.getDialogPane().getStylesheets().add(new PrimerLight().getUserAgentStylesheet());
+        alert.showAndWait();
+    }
+
+    public String showTextInputDialog(String title, String content, @Nullable String defaultText) {
         if (defaultText == null) defaultText = "";
         var dialog = new TextInputDialog(defaultText);
         dialog.setTitle(title);
@@ -344,4 +363,6 @@ public class DashboardLayoutController implements Initializable {
     public void enableNav() {
         nav.setDisable(false);
     }
+
+
 }
