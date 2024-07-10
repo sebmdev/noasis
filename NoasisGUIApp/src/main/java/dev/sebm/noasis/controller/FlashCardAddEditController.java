@@ -40,8 +40,8 @@ public class FlashCardAddEditController implements Initializable {
     @FXML private VBox content;
     @FXML private ProgressIndicator progressIndicator;
 
-    private final CookieStore httpCookieStore = new BasicCookieStore();
     private final ApplicationContext applicationContext;
+    private final Preferences preferences;
 
     @Getter
     @Setter
@@ -49,13 +49,7 @@ public class FlashCardAddEditController implements Initializable {
 
     public FlashCardAddEditController(Preferences preferences, ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-        String sessionCookieValue = preferences.node("session").get("connect.sid", "none");
-        if (sessionCookieValue != null) {
-            BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
-            sessionCookie.setPath("/");
-            sessionCookie.setDomain("localhost");
-            httpCookieStore.addCookie(sessionCookie);
-        }
+        this.preferences = preferences.node("session");
     }
 
     public void setSaveActionForEditFlashcard(FlashCard flashCard) {
@@ -63,6 +57,14 @@ public class FlashCardAddEditController implements Initializable {
         taDefinition.setText(flashCard.getDefinition());
 
         btnSave.setOnMouseClicked(_ -> {
+            CookieStore httpCookieStore = new BasicCookieStore();
+            String sessionCookieValue = preferences.get("connect.sid", "none");
+            if (sessionCookieValue != null) {
+                BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
+                sessionCookie.setPath("/");
+                sessionCookie.setDomain("localhost");
+                httpCookieStore.addCookie(sessionCookie);
+            }
             String term = taTerm.getText();
             String definition = taDefinition.getText();
             String escapedTerm = term.replace("\n", "\\n").replace("\r", "\\r");
@@ -101,7 +103,7 @@ public class FlashCardAddEditController implements Initializable {
 
                     content.setDisable(true);
                     progressIndicator.setVisible(true);
-
+                    System.out.println(status);
                     if (status >= 400) {
                         ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
                         System.out.println(errorResponse.getError());
@@ -141,6 +143,14 @@ public class FlashCardAddEditController implements Initializable {
 
     public void setSaveActionForNewFlashcard() {
         btnSave.setOnMouseClicked(_ -> {
+            CookieStore httpCookieStore = new BasicCookieStore();
+            String sessionCookieValue = preferences.get("connect.sid", "none");
+            if (sessionCookieValue != null) {
+                BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
+                sessionCookie.setPath("/");
+                sessionCookie.setDomain("localhost");
+                httpCookieStore.addCookie(sessionCookie);
+            }
             String term = taTerm.getText();
             String definition = taDefinition.getText();
 

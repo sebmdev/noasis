@@ -161,7 +161,5 @@ public class GenerateAIController {
         reader.close();
         System.out.println(text);
 
-        System.out.println("pumasok");
-
     }
 }

@@ -5,35 +5,35 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: F5F7FA;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.DashHomeController">
    <children>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <content>
+            <FlowPane fx:id="flowPane" alignment="TOP_CENTER" hgap="10" rowValignment="TOP" vgap="10">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </FlowPane>
+         </content>
+      </ScrollPane>
+      <HBox alignment="CENTER_RIGHT" layoutX="789.0" layoutY="517.0" maxHeight="-Infinity" prefHeight="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" xmlns:fx="http://javafx.com/fxml/1">
-               <content>
-                  <FlowPane fx:id="flowPane" alignment="TOP_CENTER" hgap="10" rowValignment="TOP" vgap="10">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </FlowPane>
-               </content>
-            </ScrollPane>
-            <Button fx:id="btnCreateSet" text="Create Study Set" StackPane.alignment="BOTTOM_RIGHT">
-               <StackPane.margin>
-                  <Insets bottom="50.0" right="50.0" />
-               </StackPane.margin>
+            <Button fx:id="btnCreateSet" styleClass="accent" text="Create Study Set">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
                <graphic>
-                  <FontIcon iconLiteral="fa-navicon" />
+                  <FontIcon iconLiteral="bx-add-to-queue" />
                </graphic>
             </Button>
          </children>
-      </StackPane>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
    </children>
 </AnchorPane>

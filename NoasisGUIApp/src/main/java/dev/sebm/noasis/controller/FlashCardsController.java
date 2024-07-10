@@ -1,25 +1,20 @@
 package dev.sebm.noasis.controller;
 
 import atlantafx.base.controls.Card;
+import atlantafx.base.theme.Styles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.guicomponent.FlipCard;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.models.FlashCard;
 import javafx.animation.AnimationTimer;
 import javafx.animation.RotateTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.chart.Axis;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -30,6 +25,7 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -56,54 +52,30 @@ public class FlashCardsController implements Initializable {
     @FXML private AnchorPane content;
 
     private final CookieStore httpCookieStore = new BasicCookieStore();
-    private FlipCard flipCard;
-
+    private final Preferences preferences;
     public FlashCardsController(
             Preferences preferences,
             ApplicationContext applicationContext,
             FlashCardAddEditController flashCardAddEditController,
             DashboardLayoutController dashboardLayoutController) {
-        String sessionCookieValue = preferences.node("session").get("connect.sid", "none");
+        this.flashCardAddEditController = flashCardAddEditController;
+        this.dashboardLayoutController = dashboardLayoutController;
+        this.preferences = preferences.node("session");
+    }
+
+    public void loadFlashCards(String studySetId) {
+        String sessionCookieValue = preferences.get("connect.sid", "none");
         if (sessionCookieValue != null) {
             BasicClientCookie sessionCookie = new BasicClientCookie("connect.sid", sessionCookieValue);
             sessionCookie.setPath("/");
             sessionCookie.setDomain("localhost");
             httpCookieStore.addCookie(sessionCookie);
         }
-        this.flashCardAddEditController = flashCardAddEditController;
-        this.dashboardLayoutController = dashboardLayoutController;
-    }
-
-    public void loadFlashCards(String studySetId) {
         flashcardList.getChildren().clear();
         progressIndicator.setVisible(true);
         content.setDisable(true);
         // Create front and back nodes for the flip card (you can use any Node type)
 
-        Card front = new Card();
-        front.minHeight(300);
-        front.minWidth(200);
-        front.setBody(new Text("Front"));
-
-        Card back = new Card();
-        back.minHeight(300);
-        back.minWidth(200);
-        back.setBody(new Text("Back"));
-
-        // Create the flip card
-        flipCard = new FlipCard(front, back);
-        flipCard.setRotationAxis(Rotate.Y_AXIS);
-        flipCard.setRotate(60);
-        // Set up a button to trigger the flip animation
-        Button flipButton = new Button("Flip");
-        flipButton.setOnAction(e -> flipCard());
-
-        HBox demoFlipContainer = new HBox();
-        Region r = new Region();
-        HBox.setHgrow(r, Priority.ALWAYS);
-
-        demoFlipContainer.getChildren().addAll(r, flipCard, flipButton);
-        flashcardList.getChildren().add(demoFlipContainer);
         try {
             final HttpGet httpGet = new HttpGet("http://localhost:3000/study-sets/" + studySetId);
             System.out.println("Loading study set "+ studySetId);
@@ -126,9 +98,13 @@ public class FlashCardsController implements Initializable {
                 HttpEntity entity = response.getEntity();
                 ObjectMapper objectMapper = new ObjectMapper();
 
+                System.out.println(status);
+
                 if (status >= 400) {
                     ErrorResponse errorResponse = objectMapper.readValue(entity.getContent(), ErrorResponse.class);
                     System.out.println(errorResponse.getError());
+                    progressIndicator.setVisible(false);
+                    content.setDisable(false);
                     return null;
                 }
                 if (entity != null) {
@@ -136,7 +112,46 @@ public class FlashCardsController implements Initializable {
                             objectMapper.getTypeFactory().constructCollectionType(List.class, FlashCard.class));
 
                     Platform.runLater(() -> {
+                        btnMockExam.setOnMouseClicked(e -> {
+                            dashboardLayoutController.showMockExam(flashCards);
+                            dashboardLayoutController.disableNav();
+                        });
 
+                        if (flashCards.size() > 1) {
+                            Pagination pg = new Pagination(flashCards.size(), 0);
+                            pg.setMaxPageIndicatorCount(1);
+                            pg.setPageFactory(index -> {
+                                Card front = new Card();
+                                front.minHeight(200);;
+                                front.minWidth(400);
+                                HBox frontContainer = new HBox();
+                                frontContainer.setAlignment(Pos.CENTER);
+                                frontContainer.getChildren().add(new Text(flashCards.get(index).getTerm()));
+                                front.setBody(frontContainer);
+
+
+                                Card back = new Card();
+                                back.minHeight(200);
+                                back.minWidth(400);
+                                HBox backContainer = new HBox();
+                                backContainer.setAlignment(Pos.CENTER);
+                                backContainer.getChildren().add(new Text(flashCards.get(index).getDefinition()));
+                                back.setBody(backContainer);
+
+                                // Create the flip card
+                                FlipCard flipCard = new FlipCard(front, back);
+                                flipCard.setMinHeight(200);
+                                flipCard.setMinWidth(400);
+
+                                HBox hBox = new HBox();
+                                hBox.setAlignment(Pos.CENTER);
+                                HBox.setHgrow(hBox, Priority.ALWAYS);
+                                hBox.getChildren().add(flipCard);
+                                return hBox;
+                            });
+
+                            flashcardList.getChildren().add(pg);
+                        }
 
                         flashCards.forEach(flashCard -> {
                             Card card = new Card();
@@ -161,6 +176,65 @@ public class FlashCardsController implements Initializable {
                             Button trash = new Button();
                             trash.getStyleClass().addAll("flat", "danger");
                             trash.setGraphic(new FontIcon("fa-trash-o"));
+                            trash.setOnMouseClicked(_ -> {
+                                boolean confirmDelete = dashboardLayoutController.showDeleteDialog("Delete flashcard", "Are you sure you want to delete this flashcard?");
+                                if (!confirmDelete) return;
+                                try {
+                                    final HttpDelete httpDelete = new HttpDelete("http://localhost:3000/flashcard/" + flashCard.getId());
+
+                                    CloseableHttpClient deleteHttpClient = HttpClientBuilder
+                                            .create()
+                                            .setDefaultCookieStore(httpCookieStore)
+                                            .setDefaultRequestConfig(RequestConfig
+                                                    .custom()
+                                                    .setCookieSpec(CookieSpecs.STANDARD)
+                                                    .build())
+                                            .build();
+
+                                    httpDelete.setHeader("Accept", "application/json");
+                                    httpDelete.setHeader("Content-type", "application/json");
+
+                                    ResponseHandler<String> delResponseHandler = delResponse -> {
+                                        int delStatus = delResponse.getStatusLine().getStatusCode();
+                                        System.out.println(delResponse.getEntity().toString());
+                                        HttpEntity delEntity = delResponse.getEntity();
+                                        ObjectMapper delObjectMapper = new ObjectMapper();
+
+                                        content.setDisable(true);
+                                        progressIndicator.setVisible(true);
+
+                                        if (delStatus >= 400) {
+                                            ErrorResponse errorResponse = delObjectMapper.readValue(delEntity.getContent(), ErrorResponse.class);
+                                            System.out.println(errorResponse.getError());
+                                            Platform.runLater(() -> {
+                                                content.setDisable(false);
+                                                progressIndicator.setVisible(false);
+                                            });
+                                            return null;
+                                        }
+
+                                        if (delEntity != null) {
+                                            Platform.runLater(() -> {
+                                                flashcardList.getChildren().clear();
+                                                loadFlashCards(studySetId);
+                                            });
+                                        }
+                                        return null;
+                                    };
+
+                                    Thread thread = new Thread(() -> {
+                                        try {
+                                            deleteHttpClient.execute(httpDelete, delResponseHandler);
+                                            deleteHttpClient.close();
+                                        } catch (IOException e) {
+                                        }
+                                    });
+                                    thread.start();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
+
                             headerContent.getChildren().addAll(region, edit, trash);
                             card.setHeader(headerContent);
 
@@ -204,63 +278,9 @@ public class FlashCardsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        btnMockExam.setOnMouseClicked(e -> {
-            dashboardLayoutController.showMockExam();
-        });
         btnBack.setOnMouseClicked(_ -> {
             dashboardLayoutController.showStudySets();
         });
-
-//        root.sceneProperty().addListener((observable, oldScene, newScene) -> {
-//            if (newScene != null) {
-//            }
-//        });
     }
 
-    private void flipCard() {
-        // Set up the flip animation
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1), flipCard);
-
-        if (flipCard.isFrontShown()) {
-            AnimationTimer timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    // Print the current angle of the rectangle
-                    System.out.println("Current angle: " + flipCard.rotateProperty().doubleValue());
-                    if (flipCard.rotateProperty().doubleValue() >= 90) {
-                        flipCard.showBack();
-                        flipCard.setScaleX(-1);
-                    }
-                }
-            };
-            rotateTransition.setAxis(Rotate.Y_AXIS);
-            rotateTransition.setFromAngle(0);
-            rotateTransition.setToAngle(180);
-            rotateTransition.setOnFinished(e -> {
-                timer.stop();
-            });
-            rotateTransition.play();
-            timer.start();
-        } else {
-            AnimationTimer timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    // Print the current angle of the rectangle
-                    System.out.println("Current angle: " + flipCard.rotateProperty().doubleValue());
-                    if (flipCard.rotateProperty().doubleValue() <= 90) {
-                        flipCard.showFront();
-                        flipCard.setScaleX(1);
-                    }
-                }
-            };
-            rotateTransition.setAxis(Rotate.Y_AXIS);
-            rotateTransition.setFromAngle(180);
-            rotateTransition.setToAngle(0);
-            rotateTransition.setOnFinished(e -> {
-                timer.stop();
-            });
-            rotateTransition.play();
-            timer.start();
-        }
-    }
 }

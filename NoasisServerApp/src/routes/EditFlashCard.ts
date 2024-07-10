@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import flashCardDetail from './queries/StudySets/FlashCardDetail';
 import editFlashCard from './queries/StudySets/EditFlashCard';
 
 export default async function EditFlashCard(req: Request, res: Response) {

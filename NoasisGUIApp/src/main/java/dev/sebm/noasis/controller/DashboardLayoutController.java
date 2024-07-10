@@ -1,10 +1,13 @@
 package dev.sebm.noasis.controller;
 
+import atlantafx.base.controls.ModalPane;
+import atlantafx.base.theme.Styles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.LogoutSuccessResponse;
 import dev.sebm.noasis.jsonresponses.models.FlashCard;
 import dev.sebm.noasis.util.SpringFXMLLoader;
+import jakarta.annotation.Nullable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -16,8 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -32,23 +34,27 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
 @Component
 public class DashboardLayoutController implements Initializable {
+    private final MockExamController mockExamController;
     @FXML private Button btnToggleNav;
-    @FXML private Pane nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd,generateAI, mockExam;
+    @FXML private Pane root, nav, dashHome, dashShared, flashCards, centerPane, flashCardsAdd,generateAI, mockExam;
 
     @FXML private Button btnStudySets;
     @FXML private Button btnSharedSets;
     @FXML private Button btnGenerateWithAI;
     @FXML private Button btnLogout;
+
+    @FXML private ModalPane modalPane;
 
     private final CookieStore httpCookieStore = new BasicCookieStore();
     private final SpringFXMLLoader springFXMLLoader;
@@ -58,14 +64,51 @@ public class DashboardLayoutController implements Initializable {
     public DashboardLayoutController(
             Preferences preferences,
             SpringFXMLLoader springFXMLLoader,
-            FlashCardAddEditController flashCardAddEditController) {
+            FlashCardAddEditController flashCardAddEditController, MockExamController mockExamController) {
         this.springFXMLLoader = springFXMLLoader;
         this.preferences = preferences.node("session");
         this.flashCardAddEditController = flashCardAddEditController;
+        this.mockExamController = mockExamController;
     }
 
     private boolean navOpened = true;
     private int navWidth;
+
+    public boolean showDeleteDialog(String title, String content) {
+        var alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        ButtonType yesBtn = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(yesBtn, cancel);
+        alert.initOwner(root.getScene().getWindow());
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == yesBtn;
+    }
+
+    public String showTextDialog(String title, String content, @Nullable String defaultText) {
+        if (defaultText == null) defaultText = "";
+        var dialog = new TextInputDialog(defaultText);
+        dialog.setTitle(title);
+        dialog.setHeaderText(null);
+        dialog.setContentText(content);
+        dialog.initOwner(root.getScene().getWindow());
+
+        Optional<String> result = dialog.showAndWait();
+
+        // If the dialog was canceled, return null or handle appropriately
+        if (result.isEmpty()) {
+            return null; // or handle the cancel case as needed
+        }
+
+        String enteredText = result.get();
+        if (enteredText.isEmpty()) {
+            return "Untitled";
+        }
+
+        return enteredText;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -289,7 +332,16 @@ public class DashboardLayoutController implements Initializable {
         showPage(dashHome);
     }
 
-    public void showMockExam(){
+    public void showMockExam(List<FlashCard> flashCards){
         showPage(mockExam);
+        mockExamController.setItems(flashCards);
+    }
+
+    public void disableNav() {
+        nav.setDisable(true);
+    }
+
+    public void enableNav() {
+        nav.setDisable(false);
     }
 }

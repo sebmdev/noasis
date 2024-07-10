@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import atlantafx.base.controls.ModalPane?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -10,8 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.DashboardLayoutController">
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sebm.noasis.controller.DashboardLayoutController">
    <children>
+      <ModalPane fx:id="modalPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <BorderPane fx:id="borderPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <AnchorPane fx:id="nav" prefWidth="200.0" style="-fx-background-color: #eeeeee;" BorderPane.alignment="CENTER">
@@ -70,9 +72,9 @@
                <fx:include fx:id="dashHome" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="StudySets.fxml" />
                <fx:include fx:id="dashShared" source="SharedSets.fxml" visible="false" />
                <fx:include fx:id="flashCards" source="FlashCards.fxml" visible="false" />
-               <fx:include fx:id="flashCardsAdd" source="FlashCardAddEdit.fxml" visible="false"/>
-               <fx:include fx:id="generateAI" source="GenerateAI.fxml" visible="false"/>
-               <fx:include fx:id="mockExam" source="MockExam.fxml" visible="false"/>
+               <fx:include fx:id="flashCardsAdd" source="FlashCardAddEdit.fxml" visible="false" />
+               <fx:include fx:id="generateAI" source="GenerateAI.fxml" visible="false" />
+               <fx:include fx:id="mockExam" source="MockExam.fxml" visible="false" />
             </StackPane>
          </center>
       </BorderPane>
