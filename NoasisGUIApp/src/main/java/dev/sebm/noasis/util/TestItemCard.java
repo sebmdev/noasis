@@ -149,10 +149,26 @@ public class TestItemCard extends Card {
         loadCard();
     }
 
+    public boolean getResult() {
+        return item.checkAnswer();
+    }
+
     public void showResult() {
         Text status = new Text();
         statusContainer.getChildren().clear();
-        if (item.checkAnswer()) {
+        if (item.getAnswer() == null) {
+            status.setText("No answer!");
+            status.setStyle("-fx-fill: -color-danger-fg");
+            statusContainer.setStyle("-fx-background-color: -color-danger-subtle");
+            String correctLetter = "";
+            switch (choices.indexOf(item.getCorrectFlashCard())) {
+                case 0 -> correctLetter = "A) ";
+                case 1 -> correctLetter = "B) ";
+                case 2 -> correctLetter = "C) ";
+                case 3 -> correctLetter = "D) ";
+            }
+            setFooter(new Text("Correct answer: " + correctLetter + item.getCorrectFlashCard().getTerm()));
+        } else if (item.checkAnswer()) {
             status.setText("Correct!");
             status.setStyle("-fx-fill: -color-success-fg");
             statusContainer.setStyle("-fx-background-color: -color-success-subtle");

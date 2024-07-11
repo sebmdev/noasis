@@ -18,6 +18,7 @@ public class TestItem {
     }
 
     public boolean checkAnswer() {
+        if (answer == null) return false;
         return answer.equals(correctFlashCard);
     }
 }
