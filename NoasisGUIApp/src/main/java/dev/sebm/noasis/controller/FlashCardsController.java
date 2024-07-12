@@ -1,17 +1,20 @@
 package dev.sebm.noasis.controller;
 
 import atlantafx.base.controls.Card;
+import atlantafx.base.controls.ModalPane;
 import atlantafx.base.theme.Styles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sebm.noasis.guicomponent.FlipCard;
 import dev.sebm.noasis.jsonresponses.ErrorResponse;
 import dev.sebm.noasis.jsonresponses.models.FlashCard;
+import dev.sebm.noasis.util.SpringFXMLLoader;
 import javafx.animation.AnimationTimer;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.ProgressIndicator;
@@ -19,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
@@ -47,19 +51,24 @@ public class FlashCardsController implements Initializable {
     private final FlashCardAddEditController flashCardAddEditController;
     private final DashboardLayoutController dashboardLayoutController;
     @FXML private Pane root, flashcardList;
-    @FXML private Button btnAddCard, btnBack, btnMockExam;
+    @FXML private Button btnAddCard, btnBack, btnMockExam, btnShare;
     @FXML private ProgressIndicator progressIndicator;
     @FXML private AnchorPane content;
+    @FXML private ModalPane modalPane;
 
     private final CookieStore httpCookieStore = new BasicCookieStore();
     private final Preferences preferences;
+    private final SpringFXMLLoader springFXMLLoader;
+
     public FlashCardsController(
             Preferences preferences,
             FlashCardAddEditController flashCardAddEditController,
-            DashboardLayoutController dashboardLayoutController) {
+            DashboardLayoutController dashboardLayoutController,
+            SpringFXMLLoader springFXMLLoader) {
         this.flashCardAddEditController = flashCardAddEditController;
         this.dashboardLayoutController = dashboardLayoutController;
         this.preferences = preferences.node("session");
+        this.springFXMLLoader = springFXMLLoader;
     }
 
     public void loadFlashCards(String studySetId) {
@@ -284,6 +293,44 @@ public class FlashCardsController implements Initializable {
         btnBack.setOnMouseClicked(_ -> {
             dashboardLayoutController.showStudySets();
         });
+
+        btnShare.setOnMouseClicked(_ -> {
+            System.out.println("DIALOG");
+            var dialog = new Dialog(this.springFXMLLoader, 450, 450);
+
+            modalPane.show(dialog);
+        });
+    }
+
+    private static class Dialog extends VBox {
+        private final SpringFXMLLoader springFXMLLoader;
+
+        public Dialog(SpringFXMLLoader springFXMLLoader, int width, int height) {
+            super();
+
+            this.springFXMLLoader = springFXMLLoader;
+
+            setSpacing(10);
+            setAlignment(Pos.CENTER);
+            setMinSize(width, height);
+            setMaxSize(width, height);
+            setStyle("-fx-background-color: -color-bg-default;");
+            this.sceneProperty().addListener((observable, oldScene, newScene) -> {
+                if (newScene != null) {
+                    loadFXML();
+                }
+            });
+        }
+
+        private void loadFXML() {
+            Parent pane;
+            try {
+                pane = springFXMLLoader.loadFXML("fxml/ShareDialog");
+                this.getChildren().add(pane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }

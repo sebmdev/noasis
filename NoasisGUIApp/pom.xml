@@ -106,6 +106,13 @@
             <artifactId>ikonli-boxicons-pack</artifactId>
             <version>12.3.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

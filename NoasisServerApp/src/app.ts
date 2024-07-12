@@ -16,6 +16,7 @@ import EditFlashCard from './routes/EditFlashCard'
 import DeleteFlashCard from './routes/DeleteFlashCard'
 import DeleteStudySet from './routes/DeleteStudySet'
 import EditStudySet from './routes/EditStudySet'
+import ListUsers from './routes/ListUsers'
 const MySQLStore = require('express-mysql-session')(session)
 
 declare module 'express-session' {
@@ -100,6 +101,9 @@ app.put('/flashcard/:id', async (req: Request, res: Response) => EditFlashCard(r
 
 app.delete('/flashcard/:id', async (req: Request, res: Response) => DeleteFlashCard(req, res))
 
+// app.get('/users', async (req: Request, res: Response) => ListUsers(req, res))
+
+app.post('/study-sets/:id/share')
 
 app.get('/test', async (req: Request, res: Response) => {
   console.log(req.session.id)

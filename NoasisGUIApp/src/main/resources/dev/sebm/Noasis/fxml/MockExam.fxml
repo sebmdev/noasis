@@ -31,12 +31,12 @@
                </children>
             </HBox>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="btnSubmitContinue" mnemonicParsing="false" styleClass="accent" text="Submit">
+            <Button fx:id="btnSubmitContinue" mnemonicParsing="false" styleClass="accent" text="Submit" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="btnCancelRetry" mnemonicParsing="false" text="Cancel">
+            <Button fx:id="btnCancelRetry" mnemonicParsing="false" text="Cancel" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="Georgia" size="15.0" />
                </font>
